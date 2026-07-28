@@ -191,7 +191,7 @@ function Hero(props: HeroProps) {
           className="mx-auto mt-10 max-w-5xl rounded-3xl border border-white/40 bg-card/95 p-5 shadow-2xl backdrop-blur sm:p-7"
           style={{ boxShadow: "var(--shadow-elegant)" }}
         >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <FilterField label="المحافظة" icon={<PinIcon />}>
               <select
                 value={gov}
@@ -221,6 +221,26 @@ function Hero(props: HeroProps) {
                   <option key={d} value={d}>
                     {d}
                   </option>
+                ))}
+              </select>
+            </FilterField>
+
+            <FilterField label="المرحلة الدراسية" icon={<CapIcon />}>
+              <select
+                value={grade}
+                onChange={(e) => setGrade(e.target.value)}
+                className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
+              >
+                <option value="">كل المراحل</option>
+                {Object.entries(STAGES).map(([stage, grades]) => (
+                  <optgroup key={stage} label={stage}>
+                    <option value={stage}>كل صفوف {stage}</option>
+                    {grades.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             </FilterField>
