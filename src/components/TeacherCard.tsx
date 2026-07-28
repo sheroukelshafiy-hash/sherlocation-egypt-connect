@@ -52,6 +52,22 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
           {teacher.bio}
         </p>
 
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-bold text-primary">
+            {teacher.stage}
+          </span>
+          {teacher.grades.map((g) => (
+            <span
+              key={g}
+              className="inline-flex items-center rounded-full bg-secondary px-2.5 py-1 text-[11px] font-semibold text-secondary-foreground"
+            >
+              {g}
+            </span>
+          ))}
+        </div>
+
+
+
         <div className="mt-4 flex items-center justify-between rounded-2xl bg-secondary/60 px-4 py-3">
           <span className="text-xs font-semibold text-muted-foreground">
             سعر الحصة
