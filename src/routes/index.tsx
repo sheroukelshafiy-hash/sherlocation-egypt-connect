@@ -27,6 +27,7 @@ function Index() {
   const [gov, setGov] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
+  const [grade, setGrade] = useState<string>("");
   const [price, setPrice] = useState<number>(250);
   const [submitted, setSubmitted] = useState(false);
 
@@ -40,10 +41,16 @@ function Index() {
       if (gov && t.governorate !== gov) return false;
       if (district && t.district !== district) return false;
       if (subject && t.subject !== subject) return false;
+      if (grade) {
+        // grade value may be a stage name or a specific grade
+        const isStage = grade in STAGES;
+        if (isStage ? t.stage !== grade : !t.grades.includes(grade))
+          return false;
+      }
       if (t.price > price) return false;
       return true;
     });
-  }, [gov, district, subject, price]);
+  }, [gov, district, subject, grade, price]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +73,8 @@ function Index() {
         setDistrict={setDistrict}
         subject={subject}
         setSubject={setSubject}
+        grade={grade}
+        setGrade={setGrade}
         price={price}
         setPrice={setPrice}
         districts={districts}
