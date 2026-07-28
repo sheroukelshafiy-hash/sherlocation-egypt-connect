@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { SiteHeader } from "@/components/SiteHeader";
+import { TeacherCard } from "@/components/TeacherCard";
+import { GOVERNORATES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -20,45 +23,34 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const GOVERNORATES: Record<string, string[]> = {
-  القاهرة: ["مدينة نصر", "المعادي", "مصر الجديدة", "حلوان", "شبرا"],
-  الجيزة: ["الدقي", "المهندسين", "فيصل", "الهرم", "6 أكتوبر"],
-  الإسكندرية: ["سموحة", "سيدي جابر", "العجمي", "المنتزه", "محرم بك"],
-  الدقهلية: ["المنصورة", "ميت غمر", "طلخا", "دكرنس"],
-  الشرقية: ["الزقازيق", "بلبيس", "العاشر من رمضان", "منيا القمح"],
-  المنوفية: ["شبين الكوم", "منوف", "قويسنا", "بركة السبع"],
-  الغربية: ["طنطا", "المحلة الكبرى", "كفر الزيات", "زفتى"],
-  أسيوط: ["أسيوط", "ديروط", "أبنوب", "منفلوط"],
-};
-
-const SUBJECTS = [
-  "الرياضيات",
-  "الفيزياء",
-  "الكيمياء",
-  "الأحياء",
-  "اللغة العربية",
-  "اللغة الإنجليزية",
-  "اللغة الفرنسية",
-  "التاريخ",
-  "الجغرافيا",
-  "الفلسفة",
-  "الحاسب الآلي",
-];
-
 function Index() {
   const [gov, setGov] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
-  const [price, setPrice] = useState<number>(150);
+  const [price, setPrice] = useState<number>(250);
+  const [submitted, setSubmitted] = useState(false);
 
   const districts = useMemo(
     () => (gov ? GOVERNORATES[gov] ?? [] : []),
     [gov],
   );
 
+  const results = useMemo(() => {
+    return TEACHERS.filter((t) => {
+      if (gov && t.governorate !== gov) return false;
+      if (district && t.district !== district) return false;
+      if (subject && t.subject !== subject) return false;
+      if (t.price > price) return false;
+      return true;
+    });
+  }, [gov, district, subject, price]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ gov, district, subject, price });
+    setSubmitted(true);
+    document
+      .getElementById("results")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -79,72 +71,53 @@ function Index() {
         districts={districts}
         onSubmit={handleSearch}
       />
+      <ResultsSection results={results} submitted={submitted} />
     </div>
   );
 }
 
-function SiteHeader() {
+function ResultsSection({
+  results,
+  submitted,
+}: {
+  results: typeof TEACHERS;
+  submitted: boolean;
+}) {
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="/" className="flex items-center gap-2">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-primary-foreground shadow-md"
-            style={{ background: "var(--gradient-hero)" }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-5 w-5"
-            >
-              <circle cx="11" cy="11" r="7" />
-              <path d="m20 20-3.5-3.5" />
-            </svg>
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-lg font-extrabold tracking-tight">شيرلوكيت</span>
-            <span className="text-[11px] text-muted-foreground">
-              ابحث عن مدرسك المثالي
-            </span>
-          </div>
-        </a>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          <a className="text-sm font-medium text-foreground/80 hover:text-primary" href="#">
-            الرئيسية
-          </a>
-          <a className="text-sm font-medium text-foreground/80 hover:text-primary" href="#">
-            المدرسون
-          </a>
-          <a className="text-sm font-medium text-foreground/80 hover:text-primary" href="#">
-            المواد
-          </a>
-          <a className="text-sm font-medium text-foreground/80 hover:text-primary" href="#">
-            كيف يعمل
-          </a>
-          <a className="text-sm font-medium text-foreground/80 hover:text-primary" href="#">
-            تواصل معنا
-          </a>
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <button className="hidden rounded-lg px-4 py-2 text-sm font-semibold text-foreground/80 hover:text-primary sm:inline-flex">
-            تسجيل الدخول
-          </button>
-          <button
-            className="rounded-lg px-4 py-2 text-sm font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.02]"
-            style={{ background: "var(--gradient-hero)" }}
-          >
-            انضم كمدرس
-          </button>
+    <section id="results" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+            {submitted ? "نتائج البحث" : "مدرسون مميّزون"}
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {results.length} مدرس متاح الآن حسب معاييرك
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />
+          جميع المدرسين موثّقون
         </div>
       </div>
-    </header>
+
+      {results.length === 0 ? (
+        <div className="rounded-3xl border border-dashed border-border bg-muted/40 p-12 text-center">
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-background text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </div>
+          <p className="font-bold text-foreground">لا يوجد نتائج مطابقة</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            جرّب توسيع نطاق السعر أو تغيير المركز.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {results.map((t) => (
+            <TeacherCard key={t.id} teacher={t} />
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -177,7 +150,6 @@ function Hero(props: HeroProps) {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Background gradient */}
       <div
         className="absolute inset-0 -z-10 opacity-95"
         style={{ background: "var(--gradient-hero)" }}
@@ -201,7 +173,6 @@ function Hero(props: HeroProps) {
           </p>
         </div>
 
-        {/* Search Card */}
         <form
           onSubmit={onSubmit}
           className="mx-auto mt-10 max-w-5xl rounded-3xl border border-white/40 bg-card/95 p-5 shadow-2xl backdrop-blur sm:p-7"
@@ -257,7 +228,6 @@ function Hero(props: HeroProps) {
             </FilterField>
           </div>
 
-          {/* Price slider */}
           <div className="mt-5 rounded-2xl bg-secondary/60 p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-semibold text-secondary-foreground">
@@ -314,7 +284,6 @@ function Hero(props: HeroProps) {
           </button>
         </form>
 
-        {/* Stats row */}
         <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 gap-4 text-center text-primary-foreground">
           {[
             { n: "+5,000", l: "مدرس معتمد" },
