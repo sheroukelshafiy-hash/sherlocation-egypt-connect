@@ -135,18 +135,22 @@ function TeachPage() {
               </select>
             </Field>
 
-            <Field label="المستوى الدراسي *">
+            <Field label="المرحلة والصف الدراسي *">
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
                 required
                 className={inputCls}
               >
-                <option value="">اختر المستوى</option>
-                {LEVELS.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
+                <option value="">اختر الصف</option>
+                {Object.entries(STAGES).map(([stage, grades]) => (
+                  <optgroup key={stage} label={stage}>
+                    {grades.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             </Field>
