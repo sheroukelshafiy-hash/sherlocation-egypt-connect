@@ -1,19 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { GOVERNORATES, SUBJECTS } from "@/lib/sherlocate-data";
+import { GOVERNORATES, STAGES, SUBJECTS } from "@/lib/sherlocate-data";
 
 export const Route = createFileRoute("/teach")({
   component: TeachPage,
   head: () => ({
     meta: [
-      { title: "أضف حصصك | شيرلوكيت للمدرسين" },
+      { title: "أضف حصصك | شيرلوكيشن للمدرسين" },
       {
         name: "description",
         content:
-          "أنشئ ملفك كمدرس على شيرلوكيت وأضف حصصك: المادة، الموقع، السعر، والفيديو التعريفي.",
+          "أنشئ ملفك كمدرس على شيرلوكيشن وأضف حصصك: المادة، الموقع، السعر، والفيديو التعريفي.",
       },
-      { property: "og:title", content: "أضف حصصك على شيرلوكيت" },
+      { property: "og:title", content: "أضف حصصك على شيرلوكيشن" },
       {
         property: "og:description",
         content:
@@ -34,15 +34,6 @@ type ClassItem = {
   notes: string;
 };
 
-const LEVELS = [
-  "ابتدائي",
-  "إعدادي",
-  "ثانوي (أول)",
-  "ثانوي (ثاني)",
-  "ثانوية عامة",
-  "جامعي",
-];
-
 function TeachPage() {
   const [classes, setClasses] = useState<ClassItem[]>([
     {
@@ -52,7 +43,7 @@ function TeachPage() {
       district: "مدينة نصر",
       price: 180,
       duration: 90,
-      level: "ثانوية عامة",
+      level: "الصف الثالث الثانوي",
       notes: "شرح كامل مع حل بوكليت الوزارة.",
     },
   ]);
@@ -109,7 +100,7 @@ function TeachPage() {
             </h1>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
               أنشئ ملف حصصك بسهولة. حدد المادة، الموقع، المستوى، والسعر —
-              وسيتمكن الطلاب في محافظتك من إيجادك على شيرلوكيت.
+              وسيتمكن الطلاب في محافظتك من إيجادك على شيرلوكيشن.
             </p>
           </div>
         </div>
@@ -144,18 +135,22 @@ function TeachPage() {
               </select>
             </Field>
 
-            <Field label="المستوى الدراسي *">
+            <Field label="المرحلة والصف الدراسي *">
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
                 required
                 className={inputCls}
               >
-                <option value="">اختر المستوى</option>
-                {LEVELS.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
+                <option value="">اختر الصف</option>
+                {Object.entries(STAGES).map(([stage, grades]) => (
+                  <optgroup key={stage} label={stage}>
+                    {grades.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             </Field>

@@ -77,13 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "شيرلوكيت | ابحث عن أفضل المدرسين في مصر" },
+      { title: "شيرلوكيشن | ابحث عن أفضل المدرسين في مصر" },
       {
         name: "description",
         content:
-          "شيرلوكيت منصة تعليمية تربط الطلاب المصريين بأفضل المدرسين في محافظتهم حسب المادة والسعر.",
+          "شيرلوكيشن منصة تعليمية تربط الطلاب المصريين بأفضل المدرسين في محافظتهم حسب المادة والسعر.",
       },
-      { property: "og:title", content: "شيرلوكيت | ابحث عن أفضل المدرسين في مصر" },
+      { property: "og:title", content: "شيرلوكيشن | ابحث عن أفضل المدرسين في مصر" },
       {
         property: "og:description",
         content:

@@ -2,19 +2,19 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { TeacherCard } from "@/components/TeacherCard";
-import { GOVERNORATES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
+import { GOVERNORATES, STAGES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "شيرلوكيت | ابحث عن مدرسك المثالي في مصر" },
+      { title: "شيرلوكيشن | ابحث عن مدرسك المثالي في مصر" },
       {
         name: "description",
         content:
-          "منصة شيرلوكيت تربطك بأفضل المدرسين الخصوصيين في محافظتك حسب المادة والسعر المناسب.",
+          "منصة شيرلوكيشن تربطك بأفضل المدرسين الخصوصيين في محافظتك حسب المادة والسعر المناسب.",
       },
-      { property: "og:title", content: "شيرلوكيت | ابحث عن مدرسك المثالي" },
+      { property: "og:title", content: "شيرلوكيشن | ابحث عن مدرسك المثالي" },
       {
         property: "og:description",
         content: "ابحث عن مدرسين حسب المحافظة، المركز، المادة، والسعر.",
@@ -27,6 +27,7 @@ function Index() {
   const [gov, setGov] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
+  const [grade, setGrade] = useState<string>("");
   const [price, setPrice] = useState<number>(250);
   const [submitted, setSubmitted] = useState(false);
 
@@ -40,10 +41,16 @@ function Index() {
       if (gov && t.governorate !== gov) return false;
       if (district && t.district !== district) return false;
       if (subject && t.subject !== subject) return false;
+      if (grade) {
+        // grade value may be a stage name or a specific grade
+        const isStage = grade in STAGES;
+        if (isStage ? t.stage !== grade : !t.grades.includes(grade))
+          return false;
+      }
       if (t.price > price) return false;
       return true;
     });
-  }, [gov, district, subject, price]);
+  }, [gov, district, subject, grade, price]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +73,8 @@ function Index() {
         setDistrict={setDistrict}
         subject={subject}
         setSubject={setSubject}
+        grade={grade}
+        setGrade={setGrade}
         price={price}
         setPrice={setPrice}
         districts={districts}
@@ -128,6 +137,8 @@ type HeroProps = {
   setDistrict: (v: string) => void;
   subject: string;
   setSubject: (v: string) => void;
+  grade: string;
+  setGrade: (v: string) => void;
   price: number;
   setPrice: (v: number) => void;
   districts: string[];
@@ -142,6 +153,8 @@ function Hero(props: HeroProps) {
     setDistrict,
     subject,
     setSubject,
+    grade,
+    setGrade,
     price,
     setPrice,
     districts,
@@ -168,7 +181,7 @@ function Hero(props: HeroProps) {
             في مكانك وبسعرك.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base text-primary-foreground/90 sm:text-lg">
-            شيرلوكيت منصة تعليمية تربط الطلاب المصريين بأفضل المدرسين الخصوصيين
+            شيرلوكيشن منصة تعليمية تربط الطلاب المصريين بأفضل المدرسين الخصوصيين
             في المنطقة حسب المحافظة، المركز، المادة، والسعر.
           </p>
         </div>
@@ -178,7 +191,7 @@ function Hero(props: HeroProps) {
           className="mx-auto mt-10 max-w-5xl rounded-3xl border border-white/40 bg-card/95 p-5 shadow-2xl backdrop-blur sm:p-7"
           style={{ boxShadow: "var(--shadow-elegant)" }}
         >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <FilterField label="المحافظة" icon={<PinIcon />}>
               <select
                 value={gov}
@@ -208,6 +221,26 @@ function Hero(props: HeroProps) {
                   <option key={d} value={d}>
                     {d}
                   </option>
+                ))}
+              </select>
+            </FilterField>
+
+            <FilterField label="المرحلة الدراسية" icon={<CapIcon />}>
+              <select
+                value={grade}
+                onChange={(e) => setGrade(e.target.value)}
+                className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
+              >
+                <option value="">كل المراحل</option>
+                {Object.entries(STAGES).map(([stage, grades]) => (
+                  <optgroup key={stage} label={stage}>
+                    <option value={stage}>كل صفوف {stage}</option>
+                    {grades.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             </FilterField>
@@ -352,6 +385,14 @@ function CoinIcon() {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v10M9 9.5c0-1 1-2 3-2s3 .8 3 2-1 1.7-3 2-3 1-3 2 1 2 3 2 3-1 3-2" />
+    </svg>
+  );
+}
+function CapIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+      <path d="M22 10 12 4 2 10l10 6 10-6Z" />
+      <path d="M6 12v5c3 2 9 2 12 0v-5" />
     </svg>
   );
 }
