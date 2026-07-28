@@ -34,15 +34,6 @@ type ClassItem = {
   notes: string;
 };
 
-const LEVELS = [
-  "ابتدائي",
-  "إعدادي",
-  "ثانوي (أول)",
-  "ثانوي (ثاني)",
-  "ثانوية عامة",
-  "جامعي",
-];
-
 function TeachPage() {
   const [classes, setClasses] = useState<ClassItem[]>([
     {
@@ -52,7 +43,7 @@ function TeachPage() {
       district: "مدينة نصر",
       price: 180,
       duration: 90,
-      level: "ثانوية عامة",
+      level: "الصف الثالث الثانوي",
       notes: "شرح كامل مع حل بوكليت الوزارة.",
     },
   ]);
