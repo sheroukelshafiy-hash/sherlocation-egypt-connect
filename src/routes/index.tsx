@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { TeacherCard } from "@/components/TeacherCard";
-import { GOVERNORATES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
+import { GOVERNORATES, STAGES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
 
 export const Route = createFileRoute("/")({
   component: Index,
