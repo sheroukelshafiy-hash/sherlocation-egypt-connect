@@ -137,6 +137,8 @@ type HeroProps = {
   setDistrict: (v: string) => void;
   subject: string;
   setSubject: (v: string) => void;
+  grade: string;
+  setGrade: (v: string) => void;
   price: number;
   setPrice: (v: number) => void;
   districts: string[];
@@ -151,6 +153,8 @@ function Hero(props: HeroProps) {
     setDistrict,
     subject,
     setSubject,
+    grade,
+    setGrade,
     price,
     setPrice,
     districts,
