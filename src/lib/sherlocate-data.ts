@@ -11,31 +11,59 @@ export const GOVERNORATES: Record<string, string[]> = {
 
 export const SUBJECTS = [
   "الرياضيات",
+  "العلوم",
   "الفيزياء",
   "الكيمياء",
   "الأحياء",
   "اللغة العربية",
   "اللغة الإنجليزية",
   "اللغة الفرنسية",
+  "الدراسات الاجتماعية",
   "التاريخ",
   "الجغرافيا",
   "الفلسفة",
   "الحاسب الآلي",
 ];
 
+// Academic stages and their grades (Egyptian system)
+export const STAGES: Record<string, string[]> = {
+  "المرحلة الابتدائية": [
+    "الصف الأول الابتدائي",
+    "الصف الثاني الابتدائي",
+    "الصف الثالث الابتدائي",
+    "الصف الرابع الابتدائي",
+    "الصف الخامس الابتدائي",
+    "الصف السادس الابتدائي",
+  ],
+  "المرحلة الإعدادية": [
+    "الصف الأول الإعدادي",
+    "الصف الثاني الإعدادي",
+    "الصف الثالث الإعدادي",
+  ],
+  "المرحلة الثانوية": [
+    "الصف الأول الثانوي",
+    "الصف الثاني الثانوي",
+    "الصف الثالث الثانوي",
+  ],
+};
+
+export type Stage = keyof typeof STAGES;
+
 export type Teacher = {
   id: string;
   name: string;
   subject: string;
+  stage: string;
+  grades: string[];
   governorate: string;
   district: string;
   rating: number;
   reviews: number;
   price: number;
   experience: number;
-  whatsapp: string; // international format without +
+  whatsapp: string;
   videoUrl: string;
-  avatarColor: string; // gradient stops
+  avatarColor: string;
   bio: string;
 };
 
@@ -44,6 +72,8 @@ export const TEACHERS: Teacher[] = [
     id: "t1",
     name: "أ. محمد السيد",
     subject: "الرياضيات",
+    stage: "المرحلة الثانوية",
+    grades: ["الصف الثاني الثانوي", "الصف الثالث الثانوي"],
     governorate: "القاهرة",
     district: "مدينة نصر",
     rating: 4.9,
@@ -59,6 +89,12 @@ export const TEACHERS: Teacher[] = [
     id: "t2",
     name: "أ. سارة عبد الرحمن",
     subject: "اللغة الإنجليزية",
+    stage: "المرحلة الإعدادية",
+    grades: [
+      "الصف الأول الإعدادي",
+      "الصف الثاني الإعدادي",
+      "الصف الثالث الإعدادي",
+    ],
     governorate: "الجيزة",
     district: "المهندسين",
     rating: 4.8,
@@ -68,12 +104,14 @@ export const TEACHERS: Teacher[] = [
     whatsapp: "201007654321",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     avatarColor: "from-amber-500 to-pink-500",
-    bio: "مدرّسة إنجليزي بخبرة دولية، تركز على الجرامر والمحادثة لطلاب الإعدادي والثانوي.",
+    bio: "مدرّسة إنجليزي بخبرة دولية، تركز على الجرامر والمحادثة لطلاب الإعدادي.",
   },
   {
     id: "t3",
     name: "أ. أحمد فتحي",
     subject: "الفيزياء",
+    stage: "المرحلة الثانوية",
+    grades: ["الصف الثالث الثانوي"],
     governorate: "الإسكندرية",
     district: "سموحة",
     rating: 4.7,
@@ -88,37 +126,51 @@ export const TEACHERS: Teacher[] = [
   {
     id: "t4",
     name: "أ. منى حسن",
-    subject: "الكيمياء",
+    subject: "العلوم",
+    stage: "المرحلة الابتدائية",
+    grades: [
+      "الصف الرابع الابتدائي",
+      "الصف الخامس الابتدائي",
+      "الصف السادس الابتدائي",
+    ],
     governorate: "الدقهلية",
     district: "المنصورة",
     rating: 4.9,
     reviews: 152,
-    price: 120,
+    price: 90,
     experience: 15,
     whatsapp: "201223334455",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     avatarColor: "from-emerald-500 to-lime-500",
-    bio: "مذكرات ملخّصة وطريقة تحفيظ سهلة للمعادلات الكيميائية للثانوية العامة.",
+    bio: "علوم للمرحلة الابتدائية بأسلوب تفاعلي مع تجارب عملية بسيطة تناسب الأطفال.",
   },
   {
     id: "t5",
     name: "أ. خالد إبراهيم",
     subject: "اللغة العربية",
+    stage: "المرحلة الابتدائية",
+    grades: [
+      "الصف الأول الابتدائي",
+      "الصف الثاني الابتدائي",
+      "الصف الثالث الابتدائي",
+    ],
     governorate: "القاهرة",
     district: "المعادي",
     rating: 4.6,
     reviews: 63,
-    price: 100,
+    price: 80,
     experience: 6,
     whatsapp: "201009998877",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     avatarColor: "from-orange-500 to-red-500",
-    bio: "نحو وبلاغة وأدب – تبسيط القاعدة مع تدريبات على أسئلة الامتحانات السابقة.",
+    bio: "تأسيس قراءة وكتابة لأطفال الابتدائي بطريقة ممتعة وممنهجة.",
   },
   {
     id: "t6",
     name: "أ. رانيا مصطفى",
     subject: "الأحياء",
+    stage: "المرحلة الثانوية",
+    grades: ["الصف الثاني الثانوي", "الصف الثالث الثانوي"],
     governorate: "الجيزة",
     district: "الدقي",
     rating: 4.8,
@@ -129,5 +181,39 @@ export const TEACHERS: Teacher[] = [
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     avatarColor: "from-teal-500 to-cyan-500",
     bio: "أحياء ثانوية عامة – رسوم توضيحية وتلخيص للفصول بأسلوب ممتع.",
+  },
+  {
+    id: "t7",
+    name: "أ. هاني عبد الله",
+    subject: "الرياضيات",
+    stage: "المرحلة الإعدادية",
+    grades: ["الصف الثاني الإعدادي", "الصف الثالث الإعدادي"],
+    governorate: "الشرقية",
+    district: "الزقازيق",
+    rating: 4.7,
+    reviews: 54,
+    price: 110,
+    experience: 7,
+    whatsapp: "201118889900",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    avatarColor: "from-fuchsia-500 to-rose-500",
+    bio: "جبر وهندسة للإعدادية – حل مئات المسائل والتدرّج من السهل للصعب.",
+  },
+  {
+    id: "t8",
+    name: "أ. ياسمين علي",
+    subject: "الدراسات الاجتماعية",
+    stage: "المرحلة الابتدائية",
+    grades: ["الصف الخامس الابتدائي", "الصف السادس الابتدائي"],
+    governorate: "الغربية",
+    district: "طنطا",
+    rating: 4.5,
+    reviews: 42,
+    price: 70,
+    experience: 5,
+    whatsapp: "201004445566",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    avatarColor: "from-indigo-500 to-blue-500",
+    bio: "دراسات اجتماعية للابتدائي بخرائط ملوّنة وقصص تاريخية قريبة من الأطفال.",
   },
 ];
