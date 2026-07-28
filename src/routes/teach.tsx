@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { GOVERNORATES, SUBJECTS } from "@/lib/sherlocate-data";
+import { GOVERNORATES, STAGES, SUBJECTS } from "@/lib/sherlocate-data";
 
 export const Route = createFileRoute("/teach")({
   component: TeachPage,
