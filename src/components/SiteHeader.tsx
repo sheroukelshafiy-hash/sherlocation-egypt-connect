@@ -24,7 +24,7 @@ export function SiteHeader() {
             </svg>
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-lg font-extrabold tracking-tight">شيرلوكيت</span>
+            <span className="text-lg font-extrabold tracking-tight">شيرلوكيشن</span>
             <span className="text-[11px] text-muted-foreground">
               ابحث عن مدرسك المثالي
             </span>

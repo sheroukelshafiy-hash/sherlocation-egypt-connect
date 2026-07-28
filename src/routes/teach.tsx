@@ -7,13 +7,13 @@ export const Route = createFileRoute("/teach")({
   component: TeachPage,
   head: () => ({
     meta: [
-      { title: "أضف حصصك | شيرلوكيت للمدرسين" },
+      { title: "أضف حصصك | شيرلوكيشن للمدرسين" },
       {
         name: "description",
         content:
-          "أنشئ ملفك كمدرس على شيرلوكيت وأضف حصصك: المادة، الموقع، السعر، والفيديو التعريفي.",
+          "أنشئ ملفك كمدرس على شيرلوكيشن وأضف حصصك: المادة، الموقع، السعر، والفيديو التعريفي.",
       },
-      { property: "og:title", content: "أضف حصصك على شيرلوكيت" },
+      { property: "og:title", content: "أضف حصصك على شيرلوكيشن" },
       {
         property: "og:description",
         content:
@@ -109,7 +109,7 @@ function TeachPage() {
             </h1>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
               أنشئ ملف حصصك بسهولة. حدد المادة، الموقع، المستوى، والسعر —
-              وسيتمكن الطلاب في محافظتك من إيجادك على شيرلوكيت.
+              وسيتمكن الطلاب في محافظتك من إيجادك على شيرلوكيشن.
             </p>
           </div>
         </div>

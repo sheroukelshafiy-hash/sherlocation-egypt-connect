@@ -5,7 +5,7 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
   const [videoOpen, setVideoOpen] = useState(false);
 
   const waHref = `https://wa.me/${teacher.whatsapp}?text=${encodeURIComponent(
-    `مرحباً ${teacher.name}، وجدت ملفك على شيرلوكيت وأود الاستفسار عن حصص ${teacher.subject}.`,
+    `مرحباً ${teacher.name}، وجدت ملفك على شيرلوكيشن وأود الاستفسار عن حصص ${teacher.subject}.`,
   )}`;
 
   const initials = teacher.name
