@@ -170,17 +170,17 @@ function Hero(props: HeroProps) {
       <div className="absolute inset-0 -z-10 opacity-30 [background-image:radial-gradient(circle_at_20%_20%,white_0,transparent_40%),radial-gradient(circle_at_80%_60%,white_0,transparent_35%)]" />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center text-primary-foreground">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold ring-1 ring-white/30 backdrop-blur">
+        <div className="mx-auto max-w-3xl text-center text-slate-900">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1.5 text-xs font-semibold text-slate-900 ring-1 ring-slate-900/10 shadow-sm backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-accent" />
             أكثر من 5,000 مدرس في جميع محافظات مصر
           </span>
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
             المدرس المناسب،
             <br className="hidden sm:block" />
             في مكانك وبسعرك.
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-primary-foreground/90 sm:text-lg">
+          <p className="mx-auto mt-5 max-w-2xl text-base text-slate-700 sm:text-lg">
             شيرلوكيشن منصة تعليمية تربط الطلاب المصريين بأفضل المدرسين الخصوصيين
             في المنطقة حسب المحافظة، المركز، المادة، والسعر.
           </p>
