@@ -23,10 +23,10 @@ export function SiteHeader() {
               <path d="m20 20-3.5-3.5" />
             </svg>
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-lg font-extrabold tracking-tight">شيرلوكيشن</span>
+          <div className="flex flex-col leading-tight" dir="ltr">
+            <span className="text-lg font-extrabold tracking-tight">SherLocation</span>
             <span className="text-[11px] text-muted-foreground">
-              ابحث عن مدرسك المثالي
+              Find Your Ideal Teacher
             </span>
           </div>
         </Link>
