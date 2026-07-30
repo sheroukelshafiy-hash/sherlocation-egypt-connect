@@ -40,12 +40,12 @@ The following UI and i18n items are scheduled for resolution in the upcoming upd
 
 ### Demo Video (v1.3)
 
-https://github.com/sheroukelshafiy-hash/sherlocation-egypt-connect/raw/main/public/%D8%A7%D9%84%D8%A7%D8%B5%D8%AF%D8%A7%D8%B1%20%D8%A7%D9%84%D8%AA%D8%A7%D9%84%D8%AA%20(1).mp4
+https://github.com/user-attachments/assets/17ec61ea-34dc-4631-9dc0-6b6f6426075a
 
 ---
 # SherLocation
 ---
-## [v1.3] - 2026-07-28
+## [v1.1] - 2026-07-28
 
 ### New Features & Enhancements
 
@@ -54,7 +54,8 @@ https://github.com/sheroukelshafiy-hash/sherlocation-egypt-connect/raw/main/publ
 
 This video demonstrates the initial baseline state of the application interface and its core functionalities prior to any enhancements.
 
-https://github.com/user-attachments/assets/274d2627-551a-479a-870d-4781e024cd3a
+
+https://github.com/user-attachments/assets/53d18ecf-9f31-4611-b4b7-0ba4d6d8d05f
 
 **Identified Issues and Limitations in Version 1.0**
 
