@@ -43,6 +43,37 @@ The following UI and i18n items are scheduled for resolution in the upcoming upd
 https://github.com/user-attachments/assets/17ec61ea-34dc-4631-9dc0-6b6f6426075a
 
 ---
+
+# SherLocation
+---
+## [v1.2] - 2026-07-29
+
+### New Features & Enhancements
+
+#### Navigation & Header Updates
+### SherLocation — Progress Update and UI/UX Enhancements
+
+In this phase, the primary focus was on refining the overall UI and UX, ensuring cross-device responsiveness, and expanding the platform’s geographical coverage for all users.
+
+**Key Improvements**
+
+* **Mobile Responsiveness:** Optimized the layout and navigation for mobile devices and smaller screens, providing a seamless browsing experience across all device types.
+* **Geographical Coverage Expansion:** Integrated all Egyptian governorates and resolved missing sub-centers and districts to ensure complete regional coverage for students seeking local tutors and centers.
+* **Text Contrast and Readability:** Corrected background and text color contrast issues, particularly in the Hero section, ensuring high legibility and visual clarity.
+* **Brand Identity Update:** Updated the primary header logo to the official English version, SherLocation, to strengthen brand recognition and align with standard tech conventions.
+* **Search and Filtering Optimization:** Verified dynamic filtering functions, allowing users to efficiently search by governorate, district, academic level, subject, and session price.
+
+<img width="505" height="267" alt="phone1" src="https://github.com/user-attachments/assets/39ba8008-1713-46b9-a066-991e0d4b7fcf" />
+
+<img width="509" height="137" alt="phone" src="https://github.com/user-attachments/assets/a6760377-20fb-4ff6-86a2-66d5ad5b02a8" />
+
+<img width="957" height="442" alt="Screenshot 2026-07-28 174304" src="https://github.com/user-attachments/assets/b7209099-2f1d-45b0-82dc-26d6217fe1fd" />
+
+
+https://github.com/user-attachments/assets/f6af9cae-fce5-421b-87b9-21d6b3ff104c
+
+
+  
 # SherLocation
 ---
 ## [v1.1] - 2026-07-28
