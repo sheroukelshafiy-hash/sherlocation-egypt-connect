@@ -97,9 +97,7 @@ https://github.com/user-attachments/assets/53d18ecf-9f31-4611-b4b7-0ba4d6d8d05f
 
 *Note: All identified issues and limitations have been fully addressed and resolved in subsequent UI and UX update commits.*
 
-
 ## Built with
-
 - TanStack Start
 - TypeScript
 - React
