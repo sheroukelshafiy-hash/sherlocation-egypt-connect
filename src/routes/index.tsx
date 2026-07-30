@@ -83,6 +83,7 @@ function Index() {
         onSubmit={handleSearch}
       />
       <ResultsSection results={results} submitted={submitted} />
+      <HowItWorks />
     </div>
   );
 }
@@ -175,18 +176,18 @@ function Hero(props: HeroProps) {
         <div className="mx-auto max-w-3xl text-center text-slate-900">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1.5 text-xs font-semibold text-slate-900 ring-1 ring-slate-900/10 shadow-sm backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-accent" />
-            أكثر من 5,000 مدرس في جميع محافظات مصر
+            {t("heroBadge")}
           </span>
           <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-            المدرس المناسب،
+            {t("heroTitle1")}
             <br className="hidden sm:block" />
-            في مكانك وبسعرك.
+            {t("heroTitle2")}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base text-slate-700 sm:text-lg">
-            شيرلوكيشن منصة تعليمية تربط الطلاب المصريين بأفضل المدرسين الخصوصيين
-            في المنطقة حسب المحافظة، المركز، المادة، والسعر.
+            {t("heroSubtitle")}
           </p>
         </div>
+
 
         <form
           onSubmit={onSubmit}
