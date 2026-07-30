@@ -163,6 +163,9 @@ function Hero(props: HeroProps) {
     districts,
     onSubmit,
   } = props;
+  const { t } = usePreferences();
+
+
 
   return (
     <section className="relative overflow-hidden">
@@ -316,7 +319,7 @@ function Hero(props: HeroProps) {
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.5-3.5" />
             </svg>
-            ابحث عن المدرس المناسب
+            {t("searchBtn")}
           </button>
         </form>
 
