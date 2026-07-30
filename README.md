@@ -43,6 +43,29 @@ The following UI and i18n items are scheduled for resolution in the upcoming upd
 https://github.com/sheroukelshafiy-hash/sherlocation-egypt-connect/raw/main/public/%D8%A7%D9%84%D8%A7%D8%B5%D8%AF%D8%A7%D8%B1%20%D8%A7%D9%84%D8%AA%D8%A7%D9%84%D8%AA%20(1).mp4
 
 ---
+# SherLocation
+---
+## [v1.3] - 2026-07-28
+
+### New Features & Enhancements
+
+#### Navigation & Header Updates
+### SherLocation — Initial Version (v1.0) Overview
+
+This video demonstrates the initial baseline state of the application interface and its core functionalities prior to any enhancements.
+
+https://github.com/user-attachments/assets/274d2627-551a-479a-870d-4781e024cd3a
+
+**Identified Issues and Limitations in Version 1.0**
+
+* **Visual and Contrast:** Low contrast on the Hero section text, leading to poor legibility against light backgrounds.
+* **Regional Data:** Incomplete list of Egyptian governorates and missing sub-centers or districts for localized search.
+* **Branding:** Header logo displayed solely in Arabic text rather than the standardized English branding, SherLocation.
+* **Responsiveness:** Suboptimal layout spacing and element wrapping on smaller mobile screen dimensions.
+
+*Note: All identified issues and limitations have been fully addressed and resolved in subsequent UI and UX update commits.*
+
+
 # Welcome to your Lovable project
 
 This project was built with [Lovable](https://lovable.dev).
