@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePreferences } from "@/lib/preferences";
+import { useDemoAuth } from "@/lib/demo-auth";
 
 export function AuthDialog({
   open,
@@ -9,9 +10,48 @@ export function AuthDialog({
   onClose: () => void;
 }) {
   const { t } = usePreferences();
+  const { signIn } = useDemoAuth();
   const [mode, setMode] = useState<"login" | "signup">("login");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!open) {
+      setError("");
+      setPassword("");
+    }
+  }, [open]);
 
   if (!open) return null;
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanEmail = email.trim().slice(0, 255);
+    const cleanName =
+      (mode === "signup" ? name.trim() : "").slice(0, 60) ||
+      cleanEmail.split("@")[0] ||
+      "";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setError(t("invalidEmail"));
+      return;
+    }
+    if (!cleanName) {
+      setError(t("invalidName"));
+      return;
+    }
+    if (password.length < 6) {
+      setError(t("invalidPassword"));
+      return;
+    }
+    signIn({ name: cleanName, email: cleanEmail });
+    setName("");
+    setEmail("");
+    setPassword("");
+    setError("");
+    onClose();
+  };
 
   return (
     <div
@@ -38,18 +78,38 @@ export function AuthDialog({
           </button>
         </div>
 
-        <form
-          className="mt-5 space-y-3"
-          onSubmit={(e) => {
-            e.preventDefault();
-            onClose();
-          }}
-        >
+        <form className="mt-5 space-y-3" onSubmit={submit}>
           {mode === "signup" && (
-            <Field label={t("fullName")} type="text" />
+            <Field
+              label={t("fullName")}
+              type="text"
+              value={name}
+              onChange={setName}
+              maxLength={60}
+              autoComplete="name"
+            />
           )}
-          <Field label={t("email")} type="email" />
-          <Field label={t("password")} type="password" />
+          <Field
+            label={t("email")}
+            type="email"
+            value={email}
+            onChange={setEmail}
+            maxLength={255}
+            autoComplete="email"
+          />
+          <Field
+            label={t("password")}
+            type="password"
+            value={password}
+            onChange={setPassword}
+            maxLength={72}
+            autoComplete={mode === "login" ? "current-password" : "new-password"}
+          />
+          {error && (
+            <p className="text-xs font-semibold text-destructive" role="alert">
+              {error}
+            </p>
+          )}
           <button
             type="submit"
             className="mt-2 w-full rounded-xl px-4 py-3 text-sm font-bold text-primary-foreground shadow-md"
@@ -64,7 +124,10 @@ export function AuthDialog({
           <button
             type="button"
             className="font-bold text-primary hover:underline"
-            onClick={() => setMode(mode === "login" ? "signup" : "login")}
+            onClick={() => {
+              setError("");
+              setMode(mode === "login" ? "signup" : "login");
+            }}
           >
             {mode === "login" ? t("signup") : t("login")}
           </button>
@@ -75,13 +138,31 @@ export function AuthDialog({
   );
 }
 
-function Field({ label, type }: { label: string; type: string }) {
+function Field({
+  label,
+  type,
+  value,
+  onChange,
+  maxLength,
+  autoComplete,
+}: {
+  label: string;
+  type: string;
+  value: string;
+  onChange: (v: string) => void;
+  maxLength?: number;
+  autoComplete?: string;
+}) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-xs font-bold text-muted-foreground">{label}</span>
       <input
         type={type}
         required
+        value={value}
+        maxLength={maxLength}
+        autoComplete={autoComplete}
+        onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
       />
     </label>
