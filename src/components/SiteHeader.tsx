@@ -207,16 +207,36 @@ export function SiteHeader() {
             >
               {t("settings")}
             </Link>
+            {user && (
+              <div className="mt-2 flex items-center gap-2 rounded-lg border border-border p-2.5">
+                <span
+                  aria-hidden
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-extrabold text-primary-foreground"
+                  style={{ background: "var(--gradient-hero)" }}
+                >
+                  {initials}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-bold text-foreground">{user.name}</p>
+                  <p className="truncate text-[11px] text-muted-foreground">{user.email}</p>
+                </div>
+              </div>
+            )}
             <div className="mt-2 grid grid-cols-2 gap-2 border-t border-border pt-3">
               <button
                 type="button"
                 onClick={() => {
                   close();
-                  setAuthOpen(true);
+                  if (user) {
+                    signOut();
+                    setAuthOpen(true);
+                  } else {
+                    setAuthOpen(true);
+                  }
                 }}
                 className="rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
               >
-                {t("login")}
+                {user ? t("logout") : t("login")}
               </button>
               <Link
                 to="/teach"
