@@ -95,20 +95,21 @@ function ResultsSection({
   results: typeof TEACHERS;
   submitted: boolean;
 }) {
+  const { t } = usePreferences();
   return (
     <section id="results" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-            {submitted ? "نتائج البحث" : "مدرسون مميّزون"}
+        <div className="min-w-0">
+          <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+            {submitted ? t("resultsTitle") : t("featuredTitle")}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {results.length} مدرس متاح الآن حسب معاييرك
+            {results.length} {t("resultsCount")}
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="h-2 w-2 rounded-full bg-emerald-500" />
-          جميع المدرسين موثّقون
+          <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
+          {t("allVerified")}
         </div>
       </div>
 
@@ -117,11 +118,12 @@ function ResultsSection({
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-background text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           </div>
-          <p className="font-bold text-foreground">لا يوجد نتائج مطابقة</p>
+          <p className="font-bold text-foreground">{t("noResults")}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            جرّب توسيع نطاق السعر أو تغيير المركز.
+            {t("noResultsHint")}
           </p>
         </div>
+
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((t) => (
