@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { Teacher } from "@/lib/sherlocate-data";
+import { usePreferences } from "@/lib/preferences";
 
 export function TeacherCard({ teacher }: { teacher: Teacher }) {
   const [videoOpen, setVideoOpen] = useState(false);
+  const { t } = usePreferences();
 
   const waHref = `https://wa.me/${teacher.whatsapp}?text=${encodeURIComponent(
-    `مرحباً ${teacher.name}، وجدت ملفك على شيرلوكيشن وأود الاستفسار عن حصص ${teacher.subject}.`,
+    `${t("waMessage")} ${teacher.subject}.`,
   )}`;
 
   const initials = teacher.name
@@ -14,6 +16,7 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
     .slice(0, 2)
     .map((w) => w[0])
     .join("");
+
 
   return (
     <>
@@ -32,12 +35,13 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
               <h3 className="truncate text-lg font-bold text-foreground">
                 {teacher.name}
               </h3>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700 ring-1 ring-amber-200">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700 ring-1 ring-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:ring-amber-400/30">
                 <StarIcon /> {teacher.rating.toFixed(1)}
-                <span className="font-medium text-amber-600/80">
+                <span className="font-medium text-amber-600/80 dark:text-amber-300/80">
                   ({teacher.reviews})
                 </span>
               </span>
+
             </div>
             <p className="mt-0.5 text-sm font-semibold text-primary">
               {teacher.subject}
@@ -68,14 +72,14 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
 
 
 
-        <div className="mt-4 flex items-center justify-between rounded-2xl bg-secondary/60 px-4 py-3">
-          <span className="text-xs font-semibold text-muted-foreground">
-            سعر الحصة
+        <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-secondary/60 px-4 py-3">
+          <span className="min-w-0 text-xs font-semibold text-muted-foreground">
+            {t("sessionPrice")}
           </span>
-          <span className="text-lg font-extrabold text-primary">
+          <span className="shrink-0 text-lg font-extrabold text-primary">
             {teacher.price}{" "}
             <span className="text-xs font-semibold text-muted-foreground">
-              ج.م
+              {t("egp")}
             </span>
           </span>
         </div>
@@ -86,7 +90,7 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
           >
             <PlayIcon />
-            فيديو تعريفي
+            {t("introVideo")}
           </button>
           <a
             href={waHref}
@@ -95,9 +99,10 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-transform hover:scale-[1.02]"
           >
             <WhatsappIcon />
-            واتساب
+            {t("whatsapp")}
           </a>
         </div>
+
       </article>
 
       {videoOpen && (
@@ -115,14 +120,15 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
                   {teacher.name}
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  فيديو تعريفي — {teacher.subject}
+                  {t("introVideo")} — {teacher.subject}
                 </div>
               </div>
               <button
                 onClick={() => setVideoOpen(false)}
                 className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
-                aria-label="إغلاق"
+                aria-label={t("close")}
               >
+
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M18 6 6 18M6 6l12 12"/></svg>
               </button>
             </div>

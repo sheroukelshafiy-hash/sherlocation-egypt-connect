@@ -95,20 +95,21 @@ function ResultsSection({
   results: typeof TEACHERS;
   submitted: boolean;
 }) {
+  const { t } = usePreferences();
   return (
     <section id="results" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-            {submitted ? "نتائج البحث" : "مدرسون مميّزون"}
+        <div className="min-w-0">
+          <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+            {submitted ? t("resultsTitle") : t("featuredTitle")}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {results.length} مدرس متاح الآن حسب معاييرك
+            {results.length} {t("resultsCount")}
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="h-2 w-2 rounded-full bg-emerald-500" />
-          جميع المدرسين موثّقون
+          <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
+          {t("allVerified")}
         </div>
       </div>
 
@@ -117,11 +118,12 @@ function ResultsSection({
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-background text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           </div>
-          <p className="font-bold text-foreground">لا يوجد نتائج مطابقة</p>
+          <p className="font-bold text-foreground">{t("noResults")}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            جرّب توسيع نطاق السعر أو تغيير المركز.
+            {t("noResultsHint")}
           </p>
         </div>
+
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((t) => (
@@ -163,7 +165,7 @@ function Hero(props: HeroProps) {
     districts,
     onSubmit,
   } = props;
-  const { t } = usePreferences();
+  const { t, dir } = usePreferences();
 
 
 
@@ -176,17 +178,17 @@ function Hero(props: HeroProps) {
       <div className="absolute inset-0 -z-10 opacity-30 [background-image:radial-gradient(circle_at_20%_20%,white_0,transparent_40%),radial-gradient(circle_at_80%_60%,white_0,transparent_35%)]" />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center text-slate-900">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1.5 text-xs font-semibold text-slate-900 ring-1 ring-slate-900/10 shadow-sm backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-accent" />
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1.5 text-xs font-semibold text-slate-900 shadow-sm ring-1 ring-slate-900/10 backdrop-blur dark:bg-slate-900/70 dark:text-slate-100 dark:ring-white/15">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-accent" />
             {t("heroBadge")}
           </span>
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl md:text-6xl">
             {t("heroTitle1")}
             <br className="hidden sm:block" />
             {t("heroTitle2")}
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base text-slate-700 sm:text-lg">
+          <p className="mx-auto mt-5 max-w-2xl text-base text-slate-700 dark:text-slate-200 sm:text-lg">
             {t("heroSubtitle")}
           </p>
         </div>
@@ -194,17 +196,17 @@ function Hero(props: HeroProps) {
 
         <form
           onSubmit={onSubmit}
-          className="mx-auto mt-10 max-w-5xl rounded-3xl border border-white/40 bg-card/95 p-5 shadow-2xl backdrop-blur sm:p-7"
+          className="mx-auto mt-10 max-w-5xl rounded-3xl border border-white/40 bg-card/95 p-5 shadow-2xl backdrop-blur dark:border-white/10 sm:p-7"
           style={{ boxShadow: "var(--shadow-elegant)" }}
         >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <FilterField label="المحافظة" icon={<PinIcon />}>
+            <FilterField label={t("govLabel")} icon={<PinIcon />}>
               <select
                 value={gov}
                 onChange={(e) => setGov(e.target.value)}
                 className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
               >
-                <option value="">اختر المحافظة</option>
+                <option value="">{t("chooseGov")}</option>
                 {Object.keys(GOVERNORATES).map((g) => (
                   <option key={g} value={g}>
                     {g}
@@ -213,7 +215,7 @@ function Hero(props: HeroProps) {
               </select>
             </FilterField>
 
-            <FilterField label="المركز / الحي" icon={<CompassIcon />}>
+            <FilterField label={t("districtLabel")} icon={<CompassIcon />}>
               <select
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
@@ -221,7 +223,7 @@ function Hero(props: HeroProps) {
                 className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40 disabled:opacity-60"
               >
                 <option value="">
-                  {gov ? "اختر المركز" : "اختر المحافظة أولاً"}
+                  {gov ? t("chooseDistrict") : t("chooseGovFirst")}
                 </option>
                 {districts.map((d) => (
                   <option key={d} value={d}>
@@ -231,16 +233,18 @@ function Hero(props: HeroProps) {
               </select>
             </FilterField>
 
-            <FilterField label="المرحلة الدراسية" icon={<CapIcon />}>
+            <FilterField label={t("stageLabel")} icon={<CapIcon />}>
               <select
                 value={grade}
                 onChange={(e) => setGrade(e.target.value)}
                 className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
               >
-                <option value="">كل المراحل</option>
+                <option value="">{t("allStages")}</option>
                 {Object.entries(STAGES).map(([stage, grades]) => (
                   <optgroup key={stage} label={stage}>
-                    <option value={stage}>كل صفوف {stage}</option>
+                    <option value={stage}>
+                      {t("allGradesOf")} {stage}
+                    </option>
                     {grades.map((g) => (
                       <option key={g} value={g}>
                         {g}
@@ -251,13 +255,13 @@ function Hero(props: HeroProps) {
               </select>
             </FilterField>
 
-            <FilterField label="المادة" icon={<BookIcon />}>
+            <FilterField label={t("subjectLabel")} icon={<BookIcon />}>
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
               >
-                <option value="">اختر المادة</option>
+                <option value="">{t("chooseSubject")}</option>
                 {SUBJECTS.map((s) => (
                   <option key={s} value={s}>
                     {s}
@@ -268,15 +272,17 @@ function Hero(props: HeroProps) {
           </div>
 
           <div className="mt-5 rounded-2xl bg-secondary/60 p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm font-semibold text-secondary-foreground">
-                <CoinIcon />
-                سعر الحصة
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-2 text-sm font-semibold text-secondary-foreground">
+                <span className="shrink-0 text-primary">
+                  <CoinIcon />
+                </span>
+                <span className="truncate">{t("sessionPrice")}</span>
               </div>
-              <div className="text-sm font-bold text-primary">
-                حتى{" "}
-                <span className="rounded-lg bg-primary px-3 py-1 text-primary-foreground">
-                  {price} ج.م
+              <div className="flex shrink-0 items-center gap-2 text-sm font-bold text-primary">
+                <span>{t("upTo")}</span>
+                <span className="rounded-lg bg-primary px-3 py-1 text-primary-foreground tabular-nums">
+                  {price} {t("egp")}
                 </span>
               </div>
             </div>
@@ -289,15 +295,15 @@ function Hero(props: HeroProps) {
               onChange={(e) => setPrice(Number(e.target.value))}
               className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-background accent-[color:var(--primary)]"
               style={{
-                background: `linear-gradient(to left, var(--primary) 0%, var(--primary-glow) ${
+                background: `linear-gradient(to ${dir === "rtl" ? "left" : "right"}, var(--primary) 0%, var(--primary-glow) ${
                   ((price - 50) / 450) * 100
                 }%, var(--muted) ${((price - 50) / 450) * 100}%, var(--muted) 100%)`,
               }}
-              aria-label="سعر الحصة"
+              aria-label={t("sessionPrice")}
             />
-            <div className="mt-2 flex justify-between text-xs text-muted-foreground">
-              <span>50 ج.م</span>
-              <span>500 ج.م</span>
+            <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground tabular-nums">
+              <span>50 {t("egp")}</span>
+              <span>500 {t("egp")}</span>
             </div>
           </div>
 
@@ -323,20 +329,26 @@ function Hero(props: HeroProps) {
           </button>
         </form>
 
-        <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 gap-4 text-center text-primary-foreground">
+        <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 gap-4 text-center">
           {[
-            { n: "+5,000", l: "مدرس معتمد" },
-            { n: "27", l: "محافظة" },
-            { n: "+40", l: "مادة دراسية" },
+            { n: "+5,000", l: t("statTeachers") },
+            { n: "27", l: t("statGovs") },
+            { n: "+40", l: t("statSubjects") },
           ].map((s) => (
-            <div key={s.l} className="rounded-2xl bg-white/10 p-4 ring-1 ring-white/20 backdrop-blur">
-              <div className="text-2xl font-extrabold sm:text-3xl">{s.n}</div>
-              <div className="mt-1 text-xs text-primary-foreground/85 sm:text-sm">
+            <div
+              key={s.l}
+              className="rounded-2xl bg-white/70 p-4 ring-1 ring-slate-900/10 backdrop-blur dark:bg-white/10 dark:ring-white/20"
+            >
+              <div className="text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
+                {s.n}
+              </div>
+              <div className="mt-1 text-xs text-slate-700 dark:text-slate-200 sm:text-sm">
                 {s.l}
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
