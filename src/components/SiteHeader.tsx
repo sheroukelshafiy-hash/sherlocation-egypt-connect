@@ -127,7 +127,10 @@ export function SiteHeader() {
               </span>
               <button
                 type="button"
-                onClick={signOut}
+                onClick={() => {
+                  signOut();
+                  setAuthOpen(true);
+                }}
                 className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary"
               >
                 {t("logout")}
