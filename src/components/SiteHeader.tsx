@@ -2,11 +2,13 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { AuthDialog } from "@/components/AuthDialog";
 import { usePreferences } from "@/lib/preferences";
+import { useDemoAuth } from "@/lib/demo-auth";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const { t, theme, toggleTheme, lang, toggleLang } = usePreferences();
+  const { user, initials, signOut } = useDemoAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const close = () => setOpen(false);
@@ -110,13 +112,36 @@ export function SiteHeader() {
             <GearIcon />
           </Link>
 
-          <button
-            type="button"
-            onClick={() => setAuthOpen(true)}
-            className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-foreground/80 hover:text-primary sm:inline-flex"
-          >
-            {t("login")}
-          </button>
+          {user ? (
+            <div className="hidden items-center gap-1.5 sm:flex">
+              <span
+                aria-hidden
+                title={user.name}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-extrabold text-primary-foreground shadow-md"
+                style={{ background: "var(--gradient-hero)" }}
+              >
+                {initials}
+              </span>
+              <span className="hidden max-w-[8rem] truncate text-sm font-bold text-foreground lg:inline">
+                {user.name}
+              </span>
+              <button
+                type="button"
+                onClick={signOut}
+                className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary"
+              >
+                {t("logout")}
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setAuthOpen(true)}
+              className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-foreground/80 hover:text-primary sm:inline-flex"
+            >
+              {t("login")}
+            </button>
+          )}
           <Link
             to="/teach"
             className="hidden rounded-lg px-4 py-2 text-sm font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.02] lg:inline-flex"
