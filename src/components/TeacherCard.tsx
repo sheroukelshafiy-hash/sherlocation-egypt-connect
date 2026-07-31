@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { Teacher } from "@/lib/sherlocate-data";
+import { usePreferences } from "@/lib/preferences";
 
 export function TeacherCard({ teacher }: { teacher: Teacher }) {
   const [videoOpen, setVideoOpen] = useState(false);
+  const { t } = usePreferences();
 
   const waHref = `https://wa.me/${teacher.whatsapp}?text=${encodeURIComponent(
-    `مرحباً ${teacher.name}، وجدت ملفك على شيرلوكيشن وأود الاستفسار عن حصص ${teacher.subject}.`,
+    `${t("waMessage")} ${teacher.subject}.`,
   )}`;
 
   const initials = teacher.name
@@ -14,6 +16,7 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
     .slice(0, 2)
     .map((w) => w[0])
     .join("");
+
 
   return (
     <>
