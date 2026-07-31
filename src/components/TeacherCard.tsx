@@ -35,12 +35,13 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
               <h3 className="truncate text-lg font-bold text-foreground">
                 {teacher.name}
               </h3>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700 ring-1 ring-amber-200">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700 ring-1 ring-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:ring-amber-400/30">
                 <StarIcon /> {teacher.rating.toFixed(1)}
-                <span className="font-medium text-amber-600/80">
+                <span className="font-medium text-amber-600/80 dark:text-amber-300/80">
                   ({teacher.reviews})
                 </span>
               </span>
+
             </div>
             <p className="mt-0.5 text-sm font-semibold text-primary">
               {teacher.subject}
