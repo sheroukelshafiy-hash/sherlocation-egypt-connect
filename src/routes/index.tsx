@@ -165,7 +165,7 @@ function Hero(props: HeroProps) {
     districts,
     onSubmit,
   } = props;
-  const { t } = usePreferences();
+  const { t, dir } = usePreferences();
 
 
 
