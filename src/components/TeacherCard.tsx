@@ -72,14 +72,14 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
 
 
 
-        <div className="mt-4 flex items-center justify-between rounded-2xl bg-secondary/60 px-4 py-3">
-          <span className="text-xs font-semibold text-muted-foreground">
-            سعر الحصة
+        <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-secondary/60 px-4 py-3">
+          <span className="min-w-0 text-xs font-semibold text-muted-foreground">
+            {t("sessionPrice")}
           </span>
-          <span className="text-lg font-extrabold text-primary">
+          <span className="shrink-0 text-lg font-extrabold text-primary">
             {teacher.price}{" "}
             <span className="text-xs font-semibold text-muted-foreground">
-              ج.م
+              {t("egp")}
             </span>
           </span>
         </div>
@@ -90,7 +90,7 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-bold text-foreground transition-colors hover:border-primary hover:text-primary"
           >
             <PlayIcon />
-            فيديو تعريفي
+            {t("introVideo")}
           </button>
           <a
             href={waHref}
@@ -99,9 +99,10 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-transform hover:scale-[1.02]"
           >
             <WhatsappIcon />
-            واتساب
+            {t("whatsapp")}
           </a>
         </div>
+
       </article>
 
       {videoOpen && (
