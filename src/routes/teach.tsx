@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDemoAuth } from "@/lib/demo-auth";
 import { SiteHeader } from "@/components/SiteHeader";
 import { GOVERNORATES, STAGES, SUBJECTS } from "@/lib/sherlocate-data";
 
@@ -34,19 +35,46 @@ type ClassItem = {
   notes: string;
 };
 
+const DEMO_CLASSES: ClassItem[] = [
+  {
+    id: "c1",
+    subject: "الرياضيات",
+    governorate: "القاهرة",
+    district: "مدينة نصر",
+    price: 180,
+    duration: 90,
+    level: "الصف الثالث الثانوي",
+    notes: "شرح كامل مع حل بوكليت الوزارة.",
+  },
+];
+
 function TeachPage() {
-  const [classes, setClasses] = useState<ClassItem[]>([
-    {
-      id: "c1",
-      subject: "الرياضيات",
-      governorate: "القاهرة",
-      district: "مدينة نصر",
-      price: 180,
-      duration: 90,
-      level: "الصف الثالث الثانوي",
-      notes: "شرح كامل مع حل بوكليت الوزارة.",
-    },
-  ]);
+  const { user, ready } = useDemoAuth();
+  const [classes, setClasses] = useState<ClassItem[]>(DEMO_CLASSES);
+
+  // A signed-in tester starts from a clean, zero-state workspace.
+  useEffect(() => {
+    if (!ready) return;
+    if (!user) {
+      setClasses(DEMO_CLASSES);
+      return;
+    }
+    try {
+      const raw = localStorage.getItem("sl-teacher-classes");
+      setClasses(raw ? (JSON.parse(raw) as ClassItem[]) : []);
+    } catch {
+      setClasses([]);
+    }
+  }, [ready, user]);
+
+  useEffect(() => {
+    if (!ready || !user) return;
+    try {
+      localStorage.setItem("sl-teacher-classes", JSON.stringify(classes));
+    } catch {
+      /* ignore */
+    }
+  }, [classes, ready, user]);
 
   const [subject, setSubject] = useState("");
   const [gov, setGov] = useState("");
