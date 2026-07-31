@@ -120,14 +120,15 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
                   {teacher.name}
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  فيديو تعريفي — {teacher.subject}
+                  {t("introVideo")} — {teacher.subject}
                 </div>
               </div>
               <button
                 onClick={() => setVideoOpen(false)}
                 className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
-                aria-label="إغلاق"
+                aria-label={t("close")}
               >
+
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M18 6 6 18M6 6l12 12"/></svg>
               </button>
             </div>
