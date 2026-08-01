@@ -216,6 +216,36 @@ export const DICT = {
     whatsapp: "WhatsApp",
     waMessage:
       "Hello, I found your profile on SherLocation and would like to ask about your classes in",
+    roleStudent: "Student / Parent",
+    roleTeacher: "Teacher",
+    chooseRoleHint: "Pick your account type, then enter your details.",
+    badCredentials: "Wrong email or password, or the account type doesn't match.",
+    accountCreated: "Account created successfully, welcome",
+    demoCredsTitle: "Demo credentials for testing:",
+    loggedOut: "Signed out",
+    bookLesson: "Book a lesson",
+    confirmBookingTitle: "Confirm lesson booking",
+    confirmBookingQ: "Do you want to confirm a lesson with",
+    confirm: "Confirm booking",
+    cancel: "Cancel",
+    bookingSent: "Booking request sent successfully to",
+    loginToBook: "Please log in first to book a lesson",
+    navAbout: "About",
+    aboutTitle: "SherLocation system architecture",
+    aboutVersion: "Version v4.0.2 (production stable)",
+    aboutIntro:
+      "An integrated platform connecting students with teachers through a geographic search engine built on Egypt's governorate and district structure.",
+    aboutStack: "Technology stack",
+    aboutFrontend: "Frontend tier",
+    aboutFrontendDesc:
+      "React 19, TypeScript and Tailwind CSS for a fast, fully responsive UI with RTL support.",
+    aboutData: "Data & mapping",
+    aboutDataDesc:
+      "Hierarchical data maps binding governorates to districts and stages to school grades.",
+    aboutSecurity: "Security & quality",
+    aboutSecurityDesc:
+      "Strict input validation, student/teacher role separation, and a locally stored demo session.",
+    aboutChangelog: "Release changelog",
   },
 
 } as const;
