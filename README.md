@@ -1,3 +1,26 @@
+## [v1.4] - 2026-08-01
+
+### New Features & Enhancements
+
+#### Teacher Profile & Contact Workflow
+* **WhatsApp Integration:** Direct WhatsApp contact button configured for seamless communication with teachers.
+* **Intro Video Support:** Added preview modal logic and action trigger for teacher introduction videos.
+* **Direct Booking Action:** Integrated primary gradient "Book a lesson" button with authentication checks and booking triggers.
+
+#### Onboarding & Discovery
+* **How It Works Section:** Added structured 3-step guide (`Set area & subject`, `Compare teachers`, `Contact & book`) matching the core design system.
+* **Teacher Data Entry:** Implemented dedicated teacher workflow for adding/updating subjects, pricing, contact details, and intro links.
+* <img width="595" height="220" alt="Screenshot 2026-08-01 100610" src="https://github.com/user-attachments/assets/c7b0e5c5-02f2-45fb-9705-d9a28cc6a213" />
+
+<img width="508" height="83" alt="Screenshot 2026-08-01 100540" src="https://github.com/user-attachments/assets/ee5977e9-7efa-434d-9574-8b77e093bdf8" />
+
+<img width="1919" height="660" alt="Screenshot 2026-08-01 100557" src="https://github.com/user-attachments/assets/623cfa88-cdce-4af3-9433-66db6ac92b5c" />
+
+<img width="1816" height="747" alt="Screenshot 2026-08-01 101434" src="https://github.com/user-attachments/assets/4c807793-d730-4c8a-a8ca-31ef5a851950" />
+
+<img width="1761" height="504" alt="Screenshot 2026-08-01 101438" src="https://github.com/user-attachments/assets/2cb7c096-7d69-4f8f-9c39-9c3e422c4f61" />
+
+
 # SherLocation
 
 ---
