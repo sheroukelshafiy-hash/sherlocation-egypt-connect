@@ -1,10 +1,29 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import type { Teacher } from "@/lib/sherlocate-data";
 import { usePreferences } from "@/lib/preferences";
+import { useDemoAuth } from "@/lib/demo-auth";
 
-export function TeacherCard({ teacher }: { teacher: Teacher }) {
+export function TeacherCard({
+  teacher,
+  onRequireLogin,
+}: {
+  teacher: Teacher;
+  onRequireLogin?: () => void;
+}) {
   const [videoOpen, setVideoOpen] = useState(false);
+  const [bookOpen, setBookOpen] = useState(false);
   const { t } = usePreferences();
+  const { user } = useDemoAuth();
+
+  const startBooking = () => {
+    if (!user) {
+      toast.error(t("loginToBook"));
+      onRequireLogin?.();
+      return;
+    }
+    setBookOpen(true);
+  };
 
   const waHref = `https://wa.me/${teacher.whatsapp}?text=${encodeURIComponent(
     `${t("waMessage")} ${teacher.subject}.`,
@@ -103,7 +122,56 @@ export function TeacherCard({ teacher }: { teacher: Teacher }) {
           </a>
         </div>
 
+        <button
+          type="button"
+          onClick={startBooking}
+          className="mt-2 w-full rounded-xl px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.01] active:scale-95"
+          style={{ background: "var(--gradient-hero)" }}
+        >
+          {t("bookLesson")}
+        </button>
       </article>
+
+      {bookOpen && (
+        <div
+          onClick={() => setBookOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm rounded-3xl border border-border bg-card p-6 shadow-2xl"
+          >
+            <h3 className="text-lg font-extrabold text-card-foreground">
+              {t("confirmBookingTitle")}
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {t("confirmBookingQ")} {teacher.name}؟
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setBookOpen(false);
+                  toast.success(`${t("bookingSent")} ${teacher.name}`);
+                }}
+                className="rounded-xl px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-md"
+                style={{ background: "var(--gradient-hero)" }}
+              >
+                {t("confirm")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setBookOpen(false)}
+                className="rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-bold text-foreground hover:border-primary hover:text-primary"
+              >
+                {t("cancel")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {videoOpen && (
         <div
