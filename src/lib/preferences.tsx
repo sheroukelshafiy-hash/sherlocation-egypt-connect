@@ -105,6 +105,36 @@ export const DICT = {
     introVideo: "فيديو تعريفي",
     whatsapp: "واتساب",
     waMessage: "مرحباً، وجدت ملفك على شيرلوكيشن وأود الاستفسار عن حصص",
+    roleStudent: "طالب / ولي أمر",
+    roleTeacher: "مدرس",
+    chooseRoleHint: "حدد نوع الحساب ثم أدخل البيانات بدقة",
+    badCredentials: "البريد الإلكتروني أو كلمة السر غير صحيحة، أو نوع الحساب غير مطابق.",
+    accountCreated: "تم إنشاء حسابك بنجاح، أهلاً",
+    demoCredsTitle: "بيانات تجريبية للاختبار:",
+    loggedOut: "تم تسجيل الخروج",
+    bookLesson: "حجز درس",
+    confirmBookingTitle: "تأكيد حجز الدرس",
+    confirmBookingQ: "هل ترغب في تأكيد حجز الدرس مع",
+    confirm: "تأكيد الحجز",
+    cancel: "إلغاء",
+    bookingSent: "تم إرسال طلب حجز الدرس بنجاح مع",
+    loginToBook: "برجاء تسجيل الدخول أولاً لتتمكن من حجز الدرس",
+    navAbout: "عن النظام",
+    aboutTitle: "بنية نظام شيرلوكيشن",
+    aboutVersion: "الإصدار v4.0.2 (إنتاج مستقر)",
+    aboutIntro:
+      "منظومة تقنية متكاملة تربط الطلاب بالمدرسين عبر محرك بحث جغرافي يعتمد على التقسيم الإداري لمحافظات ومراكز مصر.",
+    aboutStack: "المكدس البرمجي",
+    aboutFrontend: "واجهة المستخدم",
+    aboutFrontendDesc:
+      "React 19 وTypeScript وTailwind CSS لواجهة سريعة ومتجاوبة بالكامل مع دعم RTL.",
+    aboutData: "البيانات والربط",
+    aboutDataDesc:
+      "خرائط بيانات هرمية تربط المحافظات بالمراكز والمراحل التعليمية بالصفوف الدراسية.",
+    aboutSecurity: "الأمان والجودة",
+    aboutSecurityDesc:
+      "تحقق صارم من المدخلات، فصل أدوار الطالب والمدرس، وحالة جلسة محفوظة محلياً للتجربة.",
+    aboutChangelog: "سجل التحديثات",
   },
 
   en: {
@@ -186,6 +216,36 @@ export const DICT = {
     whatsapp: "WhatsApp",
     waMessage:
       "Hello, I found your profile on SherLocation and would like to ask about your classes in",
+    roleStudent: "Student / Parent",
+    roleTeacher: "Teacher",
+    chooseRoleHint: "Pick your account type, then enter your details.",
+    badCredentials: "Wrong email or password, or the account type doesn't match.",
+    accountCreated: "Account created successfully, welcome",
+    demoCredsTitle: "Demo credentials for testing:",
+    loggedOut: "Signed out",
+    bookLesson: "Book a lesson",
+    confirmBookingTitle: "Confirm lesson booking",
+    confirmBookingQ: "Do you want to confirm a lesson with",
+    confirm: "Confirm booking",
+    cancel: "Cancel",
+    bookingSent: "Booking request sent successfully to",
+    loginToBook: "Please log in first to book a lesson",
+    navAbout: "About",
+    aboutTitle: "SherLocation system architecture",
+    aboutVersion: "Version v4.0.2 (production stable)",
+    aboutIntro:
+      "An integrated platform connecting students with teachers through a geographic search engine built on Egypt's governorate and district structure.",
+    aboutStack: "Technology stack",
+    aboutFrontend: "Frontend tier",
+    aboutFrontendDesc:
+      "React 19, TypeScript and Tailwind CSS for a fast, fully responsive UI with RTL support.",
+    aboutData: "Data & mapping",
+    aboutDataDesc:
+      "Hierarchical data maps binding governorates to districts and stages to school grades.",
+    aboutSecurity: "Security & quality",
+    aboutSecurityDesc:
+      "Strict input validation, student/teacher role separation, and a locally stored demo session.",
+    aboutChangelog: "Release changelog",
   },
 
 } as const;

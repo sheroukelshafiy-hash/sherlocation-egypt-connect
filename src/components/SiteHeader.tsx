@@ -1,5 +1,6 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { AuthDialog } from "@/components/AuthDialog";
 import { usePreferences } from "@/lib/preferences";
 import { useDemoAuth } from "@/lib/demo-auth";
@@ -122,13 +123,17 @@ export function SiteHeader() {
               >
                 {initials}
               </span>
-              <span className="hidden max-w-[8rem] truncate text-sm font-bold text-foreground lg:inline">
-                {user.name}
+              <span className="hidden max-w-[10rem] truncate text-sm font-bold text-foreground lg:inline">
+                {user.name}{" "}
+                <span className="font-semibold text-muted-foreground">
+                  ({user.role === "teacher" ? t("roleTeacher") : t("roleStudent")})
+                </span>
               </span>
               <button
                 type="button"
                 onClick={() => {
                   signOut();
+                  toast.success(t("loggedOut"));
                   setAuthOpen(true);
                 }}
                 className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary"
@@ -203,6 +208,14 @@ export function SiteHeader() {
               {t("navHowItWorks")}
             </button>
             <Link
+              to="/about"
+              onClick={close}
+              activeProps={{ className: "bg-primary/10 text-primary" }}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-foreground hover:bg-muted"
+            >
+              {t("navAbout")}
+            </Link>
+            <Link
               to="/settings"
               onClick={close}
               activeProps={{ className: "bg-primary/10 text-primary" }}
@@ -232,6 +245,7 @@ export function SiteHeader() {
                   close();
                   if (user) {
                     signOut();
+                    toast.success(t("loggedOut"));
                     setAuthOpen(true);
                   } else {
                     setAuthOpen(true);
