@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import type { Teacher } from "@/lib/sherlocate-data";
 import { usePreferences } from "@/lib/preferences";
@@ -15,15 +16,18 @@ export function TeacherCard({
   const [bookOpen, setBookOpen] = useState(false);
   const { t } = usePreferences();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const startBooking = () => {
     if (!user) {
       toast.error(t("loginToBook"));
-      onRequireLogin?.();
+      if (onRequireLogin) onRequireLogin();
+      else void navigate({ to: "/auth", search: { mode: "login" } });
       return;
     }
     setBookOpen(true);
   };
+
 
   const waHref = `https://wa.me/${teacher.whatsapp}?text=${encodeURIComponent(
     `${t("waMessage")} ${teacher.subject}.`,
