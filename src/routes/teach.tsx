@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useDemoAuth } from "@/lib/demo-auth";
+import { useAuth } from "@/lib/auth";
 import { SiteHeader } from "@/components/SiteHeader";
 import { GOVERNORATES, STAGES, SUBJECTS } from "@/lib/sherlocate-data";
 
@@ -49,7 +49,8 @@ const DEMO_CLASSES: ClassItem[] = [
 ];
 
 function TeachPage() {
-  const { user, ready } = useDemoAuth();
+  const { user, loading } = useAuth();
+  const ready = !loading;
   const [classes, setClasses] = useState<ClassItem[]>(DEMO_CLASSES);
 
   // A signed-in tester starts from a clean, zero-state workspace.
