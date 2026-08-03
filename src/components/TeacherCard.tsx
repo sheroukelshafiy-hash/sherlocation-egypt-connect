@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import type { Teacher } from "@/lib/sherlocate-data";
 import { usePreferences } from "@/lib/preferences";
-import { useDemoAuth } from "@/lib/demo-auth";
+import { useAuth } from "@/lib/auth";
 
 export function TeacherCard({
   teacher,
@@ -14,7 +14,7 @@ export function TeacherCard({
   const [videoOpen, setVideoOpen] = useState(false);
   const [bookOpen, setBookOpen] = useState(false);
   const { t } = usePreferences();
-  const { user } = useDemoAuth();
+  const { user } = useAuth();
 
   const startBooking = () => {
     if (!user) {
