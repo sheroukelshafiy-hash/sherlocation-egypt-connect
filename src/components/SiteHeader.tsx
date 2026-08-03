@@ -1,15 +1,13 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { AuthDialog } from "@/components/AuthDialog";
 import { usePreferences } from "@/lib/preferences";
-import { useDemoAuth } from "@/lib/demo-auth";
+import { dashboardPathFor, useAuth } from "@/lib/auth";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [authOpen, setAuthOpen] = useState(false);
   const { t, theme, toggleTheme, lang, toggleLang } = usePreferences();
-  const { user, initials, signOut } = useDemoAuth();
+  const { user, initials, displayName, role, signOut } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const close = () => setOpen(false);
@@ -22,6 +20,16 @@ export function SiteHeader() {
     }
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const handleSignOut = async () => {
+    close();
+    await signOut();
+    toast.success(t("loggedOut"));
+    void navigate({ to: "/", replace: true });
+  };
+
+  const roleLabel =
+    role === "teacher" ? t("roleTeacher") : role === "guardian" ? t("roleGuardian") : t("roleStudentOnly");
 
   const navLink =
     "text-sm font-medium text-foreground/80 hover:text-primary transition-colors";
@@ -115,48 +123,51 @@ export function SiteHeader() {
 
           {user ? (
             <div className="hidden items-center gap-1.5 sm:flex">
-              <span
-                aria-hidden
-                title={user.name}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-extrabold text-primary-foreground shadow-md"
-                style={{ background: "var(--gradient-hero)" }}
+              <Link
+                to={dashboardPathFor(role)}
+                title={`${displayName} — ${roleLabel}`}
+                className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-muted"
+                onClick={close}
               >
-                {initials}
-              </span>
-              <span className="hidden max-w-[10rem] truncate text-sm font-bold text-foreground lg:inline">
-                {user.name}{" "}
-                <span className="font-semibold text-muted-foreground">
-                  ({user.role === "teacher" ? t("roleTeacher") : t("roleStudent")})
+                <span
+                  aria-hidden
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-extrabold text-primary-foreground shadow-md"
+                  style={{ background: "var(--gradient-hero)" }}
+                >
+                  {initials}
                 </span>
-              </span>
+                <span className="hidden max-w-[10rem] truncate text-sm font-bold text-foreground lg:inline">
+                  {displayName}{" "}
+                  <span className="font-semibold text-muted-foreground">({roleLabel})</span>
+                </span>
+              </Link>
               <button
                 type="button"
-                onClick={() => {
-                  signOut();
-                  toast.success(t("loggedOut"));
-                  setAuthOpen(true);
-                }}
+                onClick={() => void handleSignOut()}
                 className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary"
               >
                 {t("logout")}
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={() => setAuthOpen(true)}
+            <Link
+              to="/auth"
+              search={{ mode: "login" as const }}
               className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-foreground/80 hover:text-primary sm:inline-flex"
+              onClick={close}
             >
               {t("login")}
-            </button>
+            </Link>
           )}
-          <Link
-            to="/teach"
-            className="hidden rounded-lg px-4 py-2 text-sm font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.02] lg:inline-flex"
-            style={{ background: "var(--gradient-hero)" }}
-          >
-            {t("joinTeacher")}
-          </Link>
+          {!user && (
+            <Link
+              to="/teach"
+              className="hidden rounded-lg px-4 py-2 text-sm font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.02] lg:inline-flex"
+              style={{ background: "var(--gradient-hero)" }}
+            >
+              {t("joinTeacher")}
+            </Link>
+          )}
           <button
             type="button"
             aria-label={open ? t("closeMenu") : t("openMenu")}
@@ -215,6 +226,16 @@ export function SiteHeader() {
             >
               {t("navAbout")}
             </Link>
+            {user && (
+              <Link
+                to={dashboardPathFor(role)}
+                onClick={close}
+                activeProps={{ className: "bg-primary/10 text-primary" }}
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-foreground hover:bg-muted"
+              >
+                {t("dashboard")}
+              </Link>
+            )}
             <Link
               to="/settings"
               onClick={close}
@@ -233,42 +254,47 @@ export function SiteHeader() {
                   {initials}
                 </span>
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-foreground">{user.name}</p>
-                  <p className="truncate text-[11px] text-muted-foreground">{user.email}</p>
+                  <p className="truncate text-sm font-bold text-foreground">{displayName}</p>
+                  <p className="truncate text-[11px] text-muted-foreground" dir="ltr">
+                    {user.email}
+                  </p>
                 </div>
               </div>
             )}
             <div className="mt-2 grid grid-cols-2 gap-2 border-t border-border pt-3">
-              <button
-                type="button"
-                onClick={() => {
-                  close();
-                  if (user) {
-                    signOut();
-                    toast.success(t("loggedOut"));
-                    setAuthOpen(true);
-                  } else {
-                    setAuthOpen(true);
-                  }
-                }}
-                className="rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
-              >
-                {user ? t("logout") : t("login")}
-              </button>
-              <Link
-                to="/teach"
-                onClick={close}
-                className="rounded-lg px-4 py-2.5 text-center text-sm font-bold text-primary-foreground shadow-md"
-                style={{ background: "var(--gradient-hero)" }}
-              >
-                {t("joinTeacher")}
-              </Link>
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => void handleSignOut()}
+                  className="col-span-2 rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
+                >
+                  {t("logout")}
+                </button>
+              ) : (
+                <>
+                  <Link
+                    to="/auth"
+                    search={{ mode: "login" as const }}
+                    onClick={close}
+                    className="rounded-lg border border-border px-4 py-2.5 text-center text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
+                  >
+                    {t("login")}
+                  </Link>
+                  <Link
+                    to="/auth"
+                    search={{ mode: "signup" as const }}
+                    onClick={close}
+                    className="rounded-lg px-4 py-2.5 text-center text-sm font-bold text-primary-foreground shadow-md"
+                    style={{ background: "var(--gradient-hero)" }}
+                  >
+                    {t("signup")}
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         </div>
       )}
-
-      <AuthDialog open={authOpen} onClose={() => setAuthOpen(false)} />
     </header>
   );
 }
