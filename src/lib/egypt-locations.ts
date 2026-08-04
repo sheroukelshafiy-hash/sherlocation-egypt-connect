@@ -347,7 +347,7 @@ export const EGYPT_GOVERNORATES: GovernorateEntry[] = [
       d("بئر العبد", "Bir El Abd"),
       d("الحسنة", "Hasana"),
       d("نخل", "Nakhl"),
-credit    ],
+    ],
   },
   {
     ar: "جنوب سيناء",
