@@ -1,10 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { HowItWorks } from "@/components/HowItWorks";
 import { TeacherCard } from "@/components/TeacherCard";
 import { usePreferences } from "@/lib/preferences";
-import { GOVERNORATES, STAGES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
+import { STAGES, SUBJECTS, TEACHERS, labelFor } from "@/lib/sherlocate-data";
+import {
+  EGYPT_GOVERNORATES,
+  getDistricts,
+  governorateLabel,
+  type LocalizedName,
+} from "@/lib/egypt-locations";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -25,22 +32,22 @@ export const Route = createFileRoute("/")({
   }),
 });
 
+const MAX_PRICE = 500;
+
 function Index() {
   const [gov, setGov] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [grade, setGrade] = useState<string>("");
-  const [price, setPrice] = useState<number>(250);
+  const [price, setPrice] = useState<number>(MAX_PRICE);
   const [submitted, setSubmitted] = useState(false);
 
-  const districts = useMemo(
-    () => (gov ? GOVERNORATES[gov] ?? [] : []),
-    [gov],
-  );
+  const districts = useMemo(() => (gov ? getDistricts(gov) : []), [gov]);
 
   const results = useMemo(() => {
     return TEACHERS.filter((t) => {
       if (gov && t.governorate !== gov) return false;
+      // exact center/district match — never fall back to the governorate
       if (district && t.district !== district) return false;
       if (subject && t.subject !== subject) return false;
       if (grade) {
@@ -53,6 +60,18 @@ function Index() {
       return true;
     });
   }, [gov, district, subject, grade, price]);
+
+  const hasFilters =
+    Boolean(gov || district || subject || grade) || price !== MAX_PRICE;
+
+  const resetFilters = () => {
+    setGov("");
+    setDistrict("");
+    setSubject("");
+    setGrade("");
+    setPrice(MAX_PRICE);
+    setSubmitted(false);
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +88,7 @@ function Index() {
         gov={gov}
         setGov={(g) => {
           setGov(g);
+          // governorate changed -> the previously selected center is invalid
           setDistrict("");
         }}
         district={district}
@@ -80,13 +100,22 @@ function Index() {
         price={price}
         setPrice={setPrice}
         districts={districts}
+        hasFilters={hasFilters}
+        onReset={resetFilters}
         onSubmit={handleSearch}
       />
-      <ResultsSection results={results} submitted={submitted} />
+      <ResultsSection
+        results={results}
+        submitted={submitted}
+        hasFilters={hasFilters}
+        onReset={resetFilters}
+      />
       <HowItWorks />
+      <SiteFooter />
     </div>
   );
 }
+
 
 function ResultsSection({
   results,
