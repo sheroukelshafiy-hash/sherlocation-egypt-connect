@@ -1,10 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { HowItWorks } from "@/components/HowItWorks";
 import { TeacherCard } from "@/components/TeacherCard";
 import { usePreferences } from "@/lib/preferences";
-import { GOVERNORATES, STAGES, SUBJECTS, TEACHERS } from "@/lib/sherlocate-data";
+import { STAGES, SUBJECTS, TEACHERS, labelFor } from "@/lib/sherlocate-data";
+import {
+  EGYPT_GOVERNORATES,
+  getDistricts,
+  governorateLabel,
+  type LocalizedName,
+} from "@/lib/egypt-locations";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -25,22 +32,22 @@ export const Route = createFileRoute("/")({
   }),
 });
 
+const MAX_PRICE = 500;
+
 function Index() {
   const [gov, setGov] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [grade, setGrade] = useState<string>("");
-  const [price, setPrice] = useState<number>(250);
+  const [price, setPrice] = useState<number>(MAX_PRICE);
   const [submitted, setSubmitted] = useState(false);
 
-  const districts = useMemo(
-    () => (gov ? GOVERNORATES[gov] ?? [] : []),
-    [gov],
-  );
+  const districts = useMemo(() => (gov ? getDistricts(gov) : []), [gov]);
 
   const results = useMemo(() => {
     return TEACHERS.filter((t) => {
       if (gov && t.governorate !== gov) return false;
+      // exact center/district match — never fall back to the governorate
       if (district && t.district !== district) return false;
       if (subject && t.subject !== subject) return false;
       if (grade) {
@@ -53,6 +60,18 @@ function Index() {
       return true;
     });
   }, [gov, district, subject, grade, price]);
+
+  const hasFilters =
+    Boolean(gov || district || subject || grade) || price !== MAX_PRICE;
+
+  const resetFilters = () => {
+    setGov("");
+    setDistrict("");
+    setSubject("");
+    setGrade("");
+    setPrice(MAX_PRICE);
+    setSubmitted(false);
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +88,7 @@ function Index() {
         gov={gov}
         setGov={(g) => {
           setGov(g);
+          // governorate changed -> the previously selected center is invalid
           setDistrict("");
         }}
         district={district}
@@ -80,20 +100,33 @@ function Index() {
         price={price}
         setPrice={setPrice}
         districts={districts}
+        hasFilters={hasFilters}
+        onReset={resetFilters}
         onSubmit={handleSearch}
       />
-      <ResultsSection results={results} submitted={submitted} />
+      <ResultsSection
+        results={results}
+        submitted={submitted}
+        hasFilters={hasFilters}
+        onReset={resetFilters}
+      />
       <HowItWorks />
+      <SiteFooter />
     </div>
   );
 }
 
+
 function ResultsSection({
   results,
   submitted,
+  hasFilters,
+  onReset,
 }: {
   results: typeof TEACHERS;
   submitted: boolean;
+  hasFilters: boolean;
+  onReset: () => void;
 }) {
   const { t } = usePreferences();
   return (
@@ -107,9 +140,20 @@ function ResultsSection({
             {results.length} {t("resultsCount")}
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
-          {t("allVerified")}
+        <div className="flex items-center gap-3">
+          {hasFilters && (
+            <button
+              type="button"
+              onClick={onReset}
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary"
+            >
+              {t("resetFilters")}
+            </button>
+          )}
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
+            {t("allVerified")}
+          </div>
         </div>
       </div>
 
@@ -122,8 +166,17 @@ function ResultsSection({
           <p className="mt-1 text-sm text-muted-foreground">
             {t("noResultsHint")}
           </p>
+          {hasFilters && (
+            <button
+              type="button"
+              onClick={onReset}
+              className="mt-5 rounded-xl px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-md"
+              style={{ background: "var(--gradient-hero)" }}
+            >
+              {t("resetFilters")}
+            </button>
+          )}
         </div>
-
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((t) => (
@@ -146,7 +199,9 @@ type HeroProps = {
   setGrade: (v: string) => void;
   price: number;
   setPrice: (v: number) => void;
-  districts: string[];
+  districts: LocalizedName[];
+  hasFilters: boolean;
+  onReset: () => void;
   onSubmit: (e: React.FormEvent) => void;
 };
 
@@ -163,9 +218,12 @@ function Hero(props: HeroProps) {
     price,
     setPrice,
     districts,
+    hasFilters,
+    onReset,
     onSubmit,
   } = props;
-  const { t, dir } = usePreferences();
+  const { t, dir, lang } = usePreferences();
+
 
 
 
@@ -207,9 +265,9 @@ function Hero(props: HeroProps) {
                 className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
               >
                 <option value="">{t("chooseGov")}</option>
-                {Object.keys(GOVERNORATES).map((g) => (
-                  <option key={g} value={g}>
-                    {g}
+                {EGYPT_GOVERNORATES.map((g) => (
+                  <option key={g.ar} value={g.ar}>
+                    {governorateLabel(g.ar, lang)}
                   </option>
                 ))}
               </select>
@@ -226,8 +284,8 @@ function Hero(props: HeroProps) {
                   {gov ? t("chooseDistrict") : t("chooseGovFirst")}
                 </option>
                 {districts.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
+                  <option key={d.ar} value={d.ar}>
+                    {lang === "en" ? d.en : d.ar}
                   </option>
                 ))}
               </select>
@@ -241,13 +299,13 @@ function Hero(props: HeroProps) {
               >
                 <option value="">{t("allStages")}</option>
                 {Object.entries(STAGES).map(([stage, grades]) => (
-                  <optgroup key={stage} label={stage}>
+                  <optgroup key={stage} label={labelFor(stage, lang)}>
                     <option value={stage}>
-                      {t("allGradesOf")} {stage}
+                      {t("allGradesOf")} {labelFor(stage, lang)}
                     </option>
                     {grades.map((g) => (
                       <option key={g} value={g}>
-                        {g}
+                        {labelFor(g, lang)}
                       </option>
                     ))}
                   </optgroup>
@@ -264,11 +322,12 @@ function Hero(props: HeroProps) {
                 <option value="">{t("chooseSubject")}</option>
                 {SUBJECTS.map((s) => (
                   <option key={s} value={s}>
-                    {s}
+                    {labelFor(s, lang)}
                   </option>
                 ))}
               </select>
             </FilterField>
+
           </div>
 
           <div className="mt-5 rounded-2xl bg-secondary/60 p-5">

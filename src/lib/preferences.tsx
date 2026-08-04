@@ -100,8 +100,10 @@ export const DICT = {
     featuredTitle: "مدرسون مميّزون",
     resultsCount: "مدرس متاح الآن حسب معاييرك",
     allVerified: "جميع المدرسين موثّقون",
-    noResults: "لا يوجد نتائج مطابقة",
+    noResults: "لا يوجد مدرسون مطابقون لهذه الاختيارات حاليًا",
     noResultsHint: "جرّب توسيع نطاق السعر أو تغيير المركز.",
+    resetFilters: "إعادة ضبط الفلاتر",
+
     introVideo: "فيديو تعريفي",
     whatsapp: "واتساب",
     waMessage: "مرحباً، وجدت ملفك على شيرلوكيشن وأود الاستفسار عن حصص",
@@ -264,8 +266,10 @@ export const DICT = {
     featuredTitle: "Featured teachers",
     resultsCount: "teachers available matching your criteria",
     allVerified: "All teachers are verified",
-    noResults: "No matching results",
+    noResults: "No teachers match these filters right now",
     noResultsHint: "Try widening the price range or changing the district.",
+    resetFilters: "Reset filters",
+
     introVideo: "Intro video",
     whatsapp: "WhatsApp",
     waMessage:
