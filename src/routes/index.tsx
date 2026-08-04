@@ -265,9 +265,9 @@ function Hero(props: HeroProps) {
                 className="w-full appearance-none rounded-xl border border-input bg-background px-4 py-3 text-sm font-medium text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
               >
                 <option value="">{t("chooseGov")}</option>
-                {Object.keys(GOVERNORATES).map((g) => (
-                  <option key={g} value={g}>
-                    {g}
+                {EGYPT_GOVERNORATES.map((g) => (
+                  <option key={g.ar} value={g.ar}>
+                    {governorateLabel(g.ar, lang)}
                   </option>
                 ))}
               </select>
@@ -284,8 +284,8 @@ function Hero(props: HeroProps) {
                   {gov ? t("chooseDistrict") : t("chooseGovFirst")}
                 </option>
                 {districts.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
+                  <option key={d.ar} value={d.ar}>
+                    {lang === "en" ? d.en : d.ar}
                   </option>
                 ))}
               </select>
@@ -299,13 +299,13 @@ function Hero(props: HeroProps) {
               >
                 <option value="">{t("allStages")}</option>
                 {Object.entries(STAGES).map(([stage, grades]) => (
-                  <optgroup key={stage} label={stage}>
+                  <optgroup key={stage} label={labelFor(stage, lang)}>
                     <option value={stage}>
-                      {t("allGradesOf")} {stage}
+                      {t("allGradesOf")} {labelFor(stage, lang)}
                     </option>
                     {grades.map((g) => (
                       <option key={g} value={g}>
-                        {g}
+                        {labelFor(g, lang)}
                       </option>
                     ))}
                   </optgroup>
@@ -322,11 +322,12 @@ function Hero(props: HeroProps) {
                 <option value="">{t("chooseSubject")}</option>
                 {SUBJECTS.map((s) => (
                   <option key={s} value={s}>
-                    {s}
+                    {labelFor(s, lang)}
                   </option>
                 ))}
               </select>
             </FilterField>
+
           </div>
 
           <div className="mt-5 rounded-2xl bg-secondary/60 p-5">
