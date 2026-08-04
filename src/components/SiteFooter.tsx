@@ -25,7 +25,7 @@ export function SiteFooter() {
             {t("navBecomeTeacher")}
           </Link>
           <Link to="/settings" className="hover:text-primary">
-            {t("navSettings")}
+            {t("settingsTitle")}
           </Link>
         </nav>
 
