@@ -266,8 +266,10 @@ export const DICT = {
     featuredTitle: "Featured teachers",
     resultsCount: "teachers available matching your criteria",
     allVerified: "All teachers are verified",
-    noResults: "No matching results",
+    noResults: "No teachers match these filters right now",
     noResultsHint: "Try widening the price range or changing the district.",
+    resetFilters: "Reset filters",
+
     introVideo: "Intro video",
     whatsapp: "WhatsApp",
     waMessage:
