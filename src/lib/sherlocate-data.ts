@@ -52,6 +52,48 @@ export const STAGES: Record<string, string[]> = {
 
 export type Stage = keyof typeof STAGES;
 
+/** English labels — Arabic strings stay the canonical stored values. */
+const EN_LABELS: Record<string, string> = {
+  // subjects
+  الرياضيات: "Mathematics",
+  العلوم: "Science",
+  الفيزياء: "Physics",
+  الكيمياء: "Chemistry",
+  الأحياء: "Biology",
+  "اللغة العربية": "Arabic",
+  "اللغة الإنجليزية": "English",
+  "اللغة الفرنسية": "French",
+  "الدراسات الاجتماعية": "Social Studies",
+  التاريخ: "History",
+  الجغرافيا: "Geography",
+  الفلسفة: "Philosophy",
+  "الحاسب الآلي": "Computer Science",
+  // stages
+  "المرحلة الابتدائية": "Primary stage",
+  "المرحلة الإعدادية": "Preparatory stage",
+  "المرحلة الثانوية": "Secondary stage",
+  // grades
+  "الصف الأول الابتدائي": "Primary 1",
+  "الصف الثاني الابتدائي": "Primary 2",
+  "الصف الثالث الابتدائي": "Primary 3",
+  "الصف الرابع الابتدائي": "Primary 4",
+  "الصف الخامس الابتدائي": "Primary 5",
+  "الصف السادس الابتدائي": "Primary 6",
+  "الصف الأول الإعدادي": "Prep 1",
+  "الصف الثاني الإعدادي": "Prep 2",
+  "الصف الثالث الإعدادي": "Prep 3",
+  "الصف الأول الثانوي": "Secondary 1",
+  "الصف الثاني الثانوي": "Secondary 2",
+  "الصف الثالث الثانوي": "Secondary 3",
+};
+
+/** Localize a subject / stage / grade value stored in Arabic. */
+export function labelFor(value: string, lang: "ar" | "en"): string {
+  if (lang === "ar") return value;
+  return EN_LABELS[value] ?? value;
+}
+
+
 export type Teacher = {
   id: string;
   name: string;
