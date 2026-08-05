@@ -17,12 +17,14 @@ type Prefs = {
   dir: "rtl" | "ltr";
   emailNotifications: boolean;
   whatsappNotifications: boolean;
+  bookingNotifications: boolean;
   setTheme: (t: Theme) => void;
   toggleTheme: () => void;
   setLang: (l: Lang) => void;
   toggleLang: () => void;
   setEmailNotifications: (v: boolean) => void;
   setWhatsappNotifications: (v: boolean) => void;
+  setBookingNotifications: (v: boolean) => void;
   t: (key: keyof typeof DICT.ar) => string;
 };
 
@@ -191,6 +193,68 @@ export const DICT = {
     notAuthorizedTitle: "غير مصرح بالدخول",
     notAuthorizedDesc: "هذه الصفحة متاحة لنوع حساب آخر.",
     goToMyDashboard: "الذهاب إلى لوحتي",
+
+    aboutPageTitle: "عن شيرلوكيشن",
+    aboutLead:
+      "شيرلوكيشن منصة تعليمية مصرية تساعد الطلاب وأولياء الأمور على الوصول إلى المدرس الخصوصي المناسب في منطقتهم بسهولة ووضوح.",
+    aboutWhatTitle: "ما هو شيرلوكيشن؟",
+    aboutWhatDesc:
+      "منصة تربط الطلاب المصريين بالمدرسين الخصوصيين المناسبين لهم، مع إمكانية البحث حسب المحافظة، المركز أو الحي، المرحلة الدراسية، المادة، وسعر الحصة.",
+    aboutSearchTitle: "البحث الذكي",
+    aboutSearchDesc:
+      "بدلاً من البحث العشوائي، تختار محافظتك ثم المركز أو الحي التابع لها، وتحدد المرحلة والمادة والحد الأقصى لسعر الحصة، فتظهر لك نتائج مطابقة فقط.",
+    aboutValueTitle: "قيمة المنصة",
+    aboutValueDesc:
+      "توفير الوقت والجهد، ووضوح الأسعار قبل التواصل، وتقريب المسافة بين الطالب والمدرس داخل نفس المنطقة.",
+    aboutStudentsTitle: "كيف تساعد الطلاب؟",
+    aboutStudentsP1: "الوصول إلى مدرسين قريبين جغرافياً يقلل وقت وتكلفة الانتقال.",
+    aboutStudentsP2: "معرفة سعر الحصة والمرحلة والمادة قبل بدء أي تواصل.",
+    aboutStudentsP3: "مقارنة أكثر من مدرس ثم التواصل المباشر عبر واتساب.",
+    aboutTeachersTitle: "للمدرسين",
+    aboutTeachersP1: "عرض تخصصك والمراحل التي تدرّسها ومنطقتك وسعر حصتك.",
+    aboutTeachersP2: "الوصول إلى طلاب داخل نطاقك الجغرافي دون وسيط.",
+    aboutTeachersP3: "إدارة حصصك المعروضة من لوحة تحكم المدرس.",
+    aboutCtaTeacher: "انضم كمدرس",
+    aboutCtaSearch: "ابدأ البحث عن مدرس",
+    aboutTech: "عن النظام التقني",
+
+    settingsAccount: "الحساب",
+    settingsAccountDesc: "بيانات حسابك المسجلة في المنصة.",
+    settingsPreferences: "التفضيلات",
+    settingsNotifications: "الإشعارات",
+    settingsPrivacy: "الخصوصية والأمان",
+    settingsActions: "إجراءات الحساب",
+    editProfile: "تعديل البيانات",
+    saveChanges: "حفظ التغييرات",
+    profileUpdated: "تم تحديث بياناتك بنجاح.",
+    profileUpdateFailed: "تعذّر حفظ البيانات، حاول مرة أخرى.",
+    emailNotEditable: "لا يمكن تغيير البريد الإلكتروني الخاص بالحساب من هنا.",
+    notSignedIn: "أنت غير مسجّل الدخول",
+    notSignedInDesc: "سجّل الدخول للوصول إلى إعدادات حسابك.",
+    rememberPrefs: "حفظ تفضيلاتي على هذا الجهاز",
+    rememberPrefsDesc: "يتم حفظ اللغة والمظهر والإشعارات محلياً على هذا المتصفح.",
+    bookingNotif: "إشعارات الحجوزات والتحديثات",
+    bookingNotifDesc: "تنبيهات عند تأكيد أو تحديث حجز درس.",
+    notifLocalNote: "تفضيلات الإشعارات محفوظة على هذا الجهاز فقط حالياً.",
+    changePassword: "تغيير كلمة المرور",
+    changePasswordDesc: "سنرسل رابط تغيير كلمة المرور إلى بريدك المسجّل.",
+    sendPasswordEmail: "إرسال رابط تغيير كلمة المرور",
+    passwordEmailSent: "تم إرسال رابط تغيير كلمة المرور إلى بريدك.",
+    securityInfo: "معلومات الأمان",
+    signInMethod: "طريقة تسجيل الدخول",
+    emailPassword: "بريد إلكتروني وكلمة مرور",
+    lastSignIn: "آخر تسجيل دخول",
+    accountCreatedAt: "تاريخ إنشاء الحساب",
+    privacyNote:
+      "بياناتك محمية ولا تُعرض للمدرسين إلا عند تواصلك معهم بنفسك. لا نشارك بريدك مع أي جهة خارجية.",
+    deleteAccount: "حذف الحساب",
+    deleteAccountDesc: "حذف حسابك وبياناتك نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+    deleteAccountConfirmTitle: "تأكيد حذف الحساب",
+    deleteAccountConfirmDesc:
+      "سيتم حذف حسابك وكل بياناتك نهائياً. اكتب DELETE للتأكيد.",
+    deleteAccountFailed: "تعذّر حذف الحساب، حاول لاحقاً.",
+    accountDeleted: "تم حذف حسابك.",
+    deleting: "جاري الحذف...",
   },
 
   en: {
@@ -358,6 +422,68 @@ export const DICT = {
     notAuthorizedTitle: "Access not allowed",
     notAuthorizedDesc: "This page is available to a different account type.",
     goToMyDashboard: "Go to my dashboard",
+
+    aboutPageTitle: "About SherLocation",
+    aboutLead:
+      "SherLocation is an Egyptian education platform that helps students and parents find the right private teacher in their own area, clearly and quickly.",
+    aboutWhatTitle: "What is SherLocation?",
+    aboutWhatDesc:
+      "A platform that connects Egyptian students with suitable private teachers, searchable by governorate, district or centre, study stage, subject and session price.",
+    aboutSearchTitle: "Focused search",
+    aboutSearchDesc:
+      "Instead of searching blindly, you pick your governorate, then the centre or district that belongs to it, then the stage, subject and maximum session price — and only matching teachers are shown.",
+    aboutValueTitle: "Why it matters",
+    aboutValueDesc:
+      "It saves time and effort, makes pricing clear before you make contact, and keeps students and teachers within the same area.",
+    aboutStudentsTitle: "How it helps students",
+    aboutStudentsP1: "Nearby teachers mean less travel time and cost.",
+    aboutStudentsP2: "You know the session price, stage and subject before contacting anyone.",
+    aboutStudentsP3: "Compare several teachers, then reach out directly on WhatsApp.",
+    aboutTeachersTitle: "For teachers",
+    aboutTeachersP1: "Publish your subject, the stages you teach, your area and your session price.",
+    aboutTeachersP2: "Reach students inside your own area with no middleman.",
+    aboutTeachersP3: "Manage the classes you offer from the teacher dashboard.",
+    aboutCtaTeacher: "Join as a teacher",
+    aboutCtaSearch: "Start searching for a teacher",
+    aboutTech: "Technical overview",
+
+    settingsAccount: "Account",
+    settingsAccountDesc: "The details registered with your account.",
+    settingsPreferences: "Preferences",
+    settingsNotifications: "Notifications",
+    settingsPrivacy: "Privacy & security",
+    settingsActions: "Account actions",
+    editProfile: "Edit details",
+    saveChanges: "Save changes",
+    profileUpdated: "Your details were updated.",
+    profileUpdateFailed: "Could not save your details. Please try again.",
+    emailNotEditable: "The account email can't be changed from here.",
+    notSignedIn: "You're not signed in",
+    notSignedInDesc: "Sign in to access your account settings.",
+    rememberPrefs: "Remember my preferences on this device",
+    rememberPrefsDesc: "Language, appearance and notification choices are stored in this browser.",
+    bookingNotif: "Booking & update notifications",
+    bookingNotifDesc: "Alerts when a lesson booking is confirmed or updated.",
+    notifLocalNote: "Notification preferences are currently stored on this device only.",
+    changePassword: "Change password",
+    changePasswordDesc: "We'll email a password change link to your registered address.",
+    sendPasswordEmail: "Send password change link",
+    passwordEmailSent: "A password change link has been sent to your email.",
+    securityInfo: "Security information",
+    signInMethod: "Sign-in method",
+    emailPassword: "Email and password",
+    lastSignIn: "Last sign-in",
+    accountCreatedAt: "Account created",
+    privacyNote:
+      "Your details stay private and are only shared with a teacher when you contact them yourself. We don't sell or share your email.",
+    deleteAccount: "Delete account",
+    deleteAccountDesc: "Permanently delete your account and data. This cannot be undone.",
+    deleteAccountConfirmTitle: "Confirm account deletion",
+    deleteAccountConfirmDesc:
+      "Your account and all its data will be permanently deleted. Type DELETE to confirm.",
+    deleteAccountFailed: "Could not delete the account. Please try again later.",
+    accountDeleted: "Your account has been deleted.",
+    deleting: "Deleting...",
   },
 
 } as const;
@@ -369,6 +495,8 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ar");
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [whatsappNotifications, setWhatsappNotifications] = useState(true);
+  const [bookingNotifications, setBookingNotifications] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
@@ -376,10 +504,29 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       const l = localStorage.getItem("sl-lang") as Lang | null;
       if (t === "dark" || t === "light") setThemeState(t);
       if (l === "ar" || l === "en") setLangState(l);
+      const readBool = (k: string) => localStorage.getItem(k);
+      const e = readBool("sl-notif-email");
+      const w = readBool("sl-notif-wa");
+      const b = readBool("sl-notif-booking");
+      if (e !== null) setEmailNotifications(e === "1");
+      if (w !== null) setWhatsappNotifications(w === "1");
+      if (b !== null) setBookingNotifications(b === "1");
     } catch {
       /* ignore */
     }
+    setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem("sl-notif-email", emailNotifications ? "1" : "0");
+      localStorage.setItem("sl-notif-wa", whatsappNotifications ? "1" : "0");
+      localStorage.setItem("sl-notif-booking", bookingNotifications ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  }, [hydrated, emailNotifications, whatsappNotifications, bookingNotifications]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -413,15 +560,17 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       dir: lang === "ar" ? "rtl" : "ltr",
       emailNotifications,
       whatsappNotifications,
+      bookingNotifications,
       setTheme: setThemeState,
       toggleTheme: () => setThemeState((v) => (v === "dark" ? "light" : "dark")),
       setLang: setLangState,
       toggleLang: () => setLangState((v) => (v === "ar" ? "en" : "ar")),
       setEmailNotifications,
       setWhatsappNotifications,
+      setBookingNotifications,
       t,
     }),
-    [theme, lang, emailNotifications, whatsappNotifications, t],
+    [theme, lang, emailNotifications, whatsappNotifications, bookingNotifications, t],
   );
 
   return <PrefsContext.Provider value={value}>{children}</PrefsContext.Provider>;
