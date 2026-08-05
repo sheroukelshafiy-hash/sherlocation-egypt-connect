@@ -17,12 +17,14 @@ type Prefs = {
   dir: "rtl" | "ltr";
   emailNotifications: boolean;
   whatsappNotifications: boolean;
+  bookingNotifications: boolean;
   setTheme: (t: Theme) => void;
   toggleTheme: () => void;
   setLang: (l: Lang) => void;
   toggleLang: () => void;
   setEmailNotifications: (v: boolean) => void;
   setWhatsappNotifications: (v: boolean) => void;
+  setBookingNotifications: (v: boolean) => void;
   t: (key: keyof typeof DICT.ar) => string;
 };
 
