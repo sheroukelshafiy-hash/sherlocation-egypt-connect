@@ -436,15 +436,17 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       dir: lang === "ar" ? "rtl" : "ltr",
       emailNotifications,
       whatsappNotifications,
+      bookingNotifications,
       setTheme: setThemeState,
       toggleTheme: () => setThemeState((v) => (v === "dark" ? "light" : "dark")),
       setLang: setLangState,
       toggleLang: () => setLangState((v) => (v === "ar" ? "en" : "ar")),
       setEmailNotifications,
       setWhatsappNotifications,
+      setBookingNotifications,
       t,
     }),
-    [theme, lang, emailNotifications, whatsappNotifications, t],
+    [theme, lang, emailNotifications, whatsappNotifications, bookingNotifications, t],
   );
 
   return <PrefsContext.Provider value={value}>{children}</PrefsContext.Provider>;
