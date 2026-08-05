@@ -371,6 +371,8 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ar");
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [whatsappNotifications, setWhatsappNotifications] = useState(true);
+  const [bookingNotifications, setBookingNotifications] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
@@ -378,10 +380,29 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       const l = localStorage.getItem("sl-lang") as Lang | null;
       if (t === "dark" || t === "light") setThemeState(t);
       if (l === "ar" || l === "en") setLangState(l);
+      const readBool = (k: string) => localStorage.getItem(k);
+      const e = readBool("sl-notif-email");
+      const w = readBool("sl-notif-wa");
+      const b = readBool("sl-notif-booking");
+      if (e !== null) setEmailNotifications(e === "1");
+      if (w !== null) setWhatsappNotifications(w === "1");
+      if (b !== null) setBookingNotifications(b === "1");
     } catch {
       /* ignore */
     }
+    setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem("sl-notif-email", emailNotifications ? "1" : "0");
+      localStorage.setItem("sl-notif-wa", whatsappNotifications ? "1" : "0");
+      localStorage.setItem("sl-notif-booking", bookingNotifications ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  }, [hydrated, emailNotifications, whatsappNotifications, bookingNotifications]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
